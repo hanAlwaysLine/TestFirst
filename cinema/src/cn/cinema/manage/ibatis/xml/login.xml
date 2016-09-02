@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+   <sqlMap >
+   
+   <update id="login.update" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+   update t0001_ad_user
+   set password=#password#
+   where id=#id#
+   </update>
+  		 <!-- 查询用户名是否存在 -->
+		 <select id="select_user"  resultClass="cn.cinema.manage.entity.sys.T0001_Ad_User" parameterClass="java.util.HashMap">
+			select * from t0001_ad_user t where t.name=#name#  and t.password=#password#  and state='0'
+		  </select>
+		  <!-- 查询用户是否有权限 -->
+		  <select id="select_grant" resultClass="cn.cinema.manage.entity.sys.T0002_Ad_Role" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+		    select role.* from t0004_ad_userrole userrole ,t0002_ad_role role where userrole.role_id=role.id and userrole.user_id=#id#
+		  </select>
+		  <!-- 获取所有父目录-->
+		  <select id="select_menu" resultClass="cn.cinema.manage.entity.sys.T0003_Ad_Competence" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+		  select menu.*
+  from t0003_ad_competence menu, t0005_ad_comprole power, t0002_ad_role role
+ where role.id = power.role_id
+   and power.competence_id = menu.id
+   and menu.father is null
+   and role.id = #id#
+ 	order by menu.id
+		  </select>
+		  <!-- 根据父目录查询子目录 -->
+		  <select id="select_menu_son" resultClass="cn.cinema.manage.entity.sys.T0003_Ad_Competence" parameterClass="cn.cinema.manage.entity.sys.T0003_Ad_Competence">
+		 select menu.*
+  from t0003_ad_competence menu, t0005_ad_comprole power, t0002_ad_role role
+ where role.id = power.role_id
+   and power.competence_id = menu.id
+   and menu.father = #id#
+   and role.id in ($roleId$)
+ order by menu.id
+		  </select>
+   </sqlMap>

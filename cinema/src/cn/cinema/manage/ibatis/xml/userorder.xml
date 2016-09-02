@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 查询购票管理列表 -->
+	<select id="select_userorder_list" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder"
+		resultClass="java.util.HashMap">
+		select u.*,
+		t.user_mobile
+		from t0300_userorder u, t1000_user t
+		where u.user_id = t.user_id
+		<isNotEmpty prepend="and" property="startDate">
+			substr(u.order_time,0,10)>=#startDate#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="endDate">
+			<![CDATA[substr(u.order_time,0,10)<=#endDate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="user_name">
+			t.user_name like '%'||#user_name#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="order_type">
+			u.order_type = #order_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_status">
+			u.pay_status = #pay_status#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="appcode">
+			u.appcode = #appcode#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="user_mobile">
+			t.user_mobile like '%'||#user_mobile#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_type">
+			u.pay_type = #pay_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_tranno">
+			u.pay_tranno like '%'||#pay_tranno#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_cardno">
+			u.pay_cardno like '%'||#pay_cardno#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="order_no">
+			u.order_no = #order_no#
+		</isNotEmpty>
+		
+		order by  u.order_no desc
+	</select>
+	
+	<!-- 查询总数 -->
+	<select id="select_userorder_count" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder"
+		resultClass="java.lang.String">
+		select count(u.order_no)
+		from t0300_userorder u, t1000_user t
+		where u.user_id = t.user_id
+		<isNotEmpty prepend="and" property="startDate">
+			substr(u.order_time,0,10)>=#startDate#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="endDate">
+			<![CDATA[substr(u.order_time,0,10)<=#endDate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="order_no">
+			u.order_no like '%'||#order_no#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="user_name">
+			t.user_name like '%'||#user_name#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="order_type">
+			u.order_type = #order_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_status">
+			u.pay_status = #pay_status#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="appcode">
+			u.appcode = #appcode#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="user_mobile">
+			t.user_mobile like '%'||#user_mobile#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_type">
+			u.pay_type = #pay_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_tranno">
+			u.pay_tranno like '%'||#pay_tranno#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="pay_cardno">
+			u.pay_cardno like '%'||#pay_cardno#||'%'
+		</isNotEmpty>
+	</select>
+	
+	<!-- 更新领取状态 -->
+	<update id="update_userorder_receive" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder">
+	update t0300_userorder t
+   	set t.receive_status = '1',
+       t.receive_time   = to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),
+       t.oper_id        = #oper_id#
+ 	where t.order_no = #order_no#
+	</update>
+	
+	<!-- 查询订单 影票订单 卖品订单 -->
+	<select id="select_countorderformlist" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder"  resultClass="java.util.HashMap">
+	  select 
+         u.order_no,
+         nvl(u.order_price,0) order_price,
+         nvl(od.countprice,0) countprice,
+         od.ticketsnum,
+         a.activity_id,
+         nvl(a.price,0) activeprice,
+         a.activity_name,
+         f.featureappno,
+         f.filmno,
+         f.filmname,
+         f.featureno,
+         f.hallno,
+         f.hallname,
+         nvl(f.apppric,0) apppric,
+         od.ticketsnum*nvl(f.apppric,0) apptoalprice,
+         nvl((select sum(ol.goods_price)
+            from t0300_orderlist ol
+           where ol.order_no = u.order_no),0)
+          as goodtotalprice,
+          (select sum(ol.goods_count)
+            from t0300_orderlist ol
+           where ol.order_no = u.order_no) goodtotals,
+           u.order_time
+      from t0300_userorder u
+      left join t0300_orderform od on u.order_no = od.orderno
+      left join t0201_feature_app f on od.featureappno = f.featureappno
+      left join t0403_activity a on u.activity_id = a.activity_id ,
+           t1000_user t
+      where 
+           u.user_id = t.user_id
+       and u.pay_status='1'
+      <isNotEmpty prepend="and" property="order_no">
+		   u.order_no  = #order_no#
+		</isNotEmpty>
+	  <isNotEmpty prepend="and" property="startDate">
+	  	  <![CDATA[substr(u.order_time,0,10)>=#startDate#]]>
+	  </isNotEmpty>
+	  <isNotEmpty prepend="and" property="endDate">
+	   	 <![CDATA[substr(u.order_time,0,10)<=#endDate#]]>
+	  </isNotEmpty>
+     order by  u.order_no desc
+	</select>
+	
+	<select id="select_countorderformlist_count" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder"
+		resultClass="java.lang.String">
+		select 
+         count(*)
+      from t0300_userorder u
+      left join t0300_orderform od on u.order_no = od.orderno
+      left join t0201_feature_app f on od.featureappno = f.featureappno
+      left join t0403_activity a on u.activity_id = a.activity_id ,
+           t1000_user t
+      where 
+           u.user_id = t.user_id
+       and u.pay_status='1'
+      <isNotEmpty prepend="and" property="order_no">
+		   u.order_no  = #order_no#
+		</isNotEmpty>
+	  <isNotEmpty prepend="and" property="startDate">
+	  	  <![CDATA[substr(u.order_time,0,10)>=#startDate#]]>
+	  </isNotEmpty>
+	  <isNotEmpty prepend="and" property="endDate">
+	   	 <![CDATA[substr(u.order_time,0,10)<=#endDate#]]>
+	  </isNotEmpty>
+	</select>
+	
+	<!-- 判断该排期应用是否存在订单 -->
+	<select id="select_existsorder" parameterClass="java.lang.String" resultClass="java.lang.String">
+		select count(*) from t0300_orderform t where t.featureappno=#featureappno#
+	</select>
+	
+</sqlMap>

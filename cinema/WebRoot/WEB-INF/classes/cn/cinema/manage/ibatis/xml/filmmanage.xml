@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 影片查询 -->
+	<select id="select_filmmanage" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE"
+		parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+		select * from t0111_filmmessage
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="filmname">
+				filmname like '%$filmname$%'
+			 </isNotEmpty>
+			<isNotEmpty prepend="and" property="filmno">
+				filmno like '%$filmno$%'
+			 </isNotEmpty>
+		</dynamic>
+		 order by position,id desc
+	</select>
+	<!-- 查询总数 -->
+	<select id="select_filmmanage_count" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE"
+		resultClass="java.lang.String">
+		select count(*) from t0111_filmmessage
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="filmname">
+				filmname like '%$filmname$%'
+			 </isNotEmpty>
+			<isNotEmpty prepend="and" property="filmno">
+				filmno like '%$filmno$%'
+			 </isNotEmpty>
+		</dynamic>
+	</select>
+	<!-- 查看详细信息 -->
+	<select id="query_film" parameterClass="java.lang.Integer"
+		resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+	     select id,filmno,filmname,filmename,direct,player,writer,version_type,grade,
+		(select name from t0903_nation where id=t.parea) nationname
+		,showtime,
+		(select title from t0112_genremessage where id=t.genreno) genrename
+		,filmsis,getshow,image,images
+		from t0111_filmmessage t where t.id=$id$
+	  </select>
+	<!-- 删除影片 -->
+	<delete id="del_film" parameterClass="java.lang.Integer">
+		delete from t0111_filmmessage where id=$id$
+	  </delete>
+	<!-- 添加影片 -->
+	<insert id="insert_filmmessage" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+		<selectKey keyProperty="id">
+			select trim(to_char(T0111_FILMMESSAGE_SEQUENCE.NEXTVAL,'00000000')) FROM
+			DUAL
+	  </selectKey>
+		insert into t0111_filmmessage
+		(id,filmno,filmname,filmename,genreno,showtime,stoptime,parea,direct,player,filmsis,getshow,image,images,version_type,writer,release,filmtime,grade)
+		values
+		(T0111_FILMMESSAGE_SEQUENCE.NEXTVAL,#filmno#,#filmname#,#filmename#,#genreno#,#showtime#,#stoptime#,#parea#,#direct#,#player#,#filmsis#,#getshow#,#image#,#images#,#version_type#,#writer#,#release#,#filmtime#,#grade#)
+	</insert>
+	<!--根据ID查询-->
+	<select id="edit_film" parameterClass="java.lang.Integer" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+	  select * from t0111_filmmessage t where t.id=$id$
+	</select>
+	
+	<update id="update_filmimage" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+	   update t0111_filmmessage set  image = #image#
+	   where id=$id$
+	</update>
+	<!--执行影片修改 -->
+	<update id="update_film" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+		update t0111_filmmessage set filmno=#filmno#,filmname=#filmname#,filmename=#filmename#,genreno=#genreno#,version_type=#version_type#,showtime=#showtime#,stoptime=#stoptime#,parea=#parea#,direct=#direct#,player=#player#,writer=#writer#,filmsis=#filmsis#,getshow=#getshow#,filmtime=#filmtime#,release=#release#,grade=#grade#
+		<dynamic>
+ 		<isNotEmpty property="image" prepend=",">
+		        image = #image#
+		</isNotEmpty>
+		<isNotEmpty property="images" prepend=",">
+		        images = #images#
+		</isNotEmpty>
+		</dynamic>
+	    where id=$id$
+	  </update>
+	  <!--影片分类查询 -->
+	 <select id="select_genremessage" resultClass="cn.cinema.manage.entity.filmmanage.T0112_GENREMESSAGE">
+		select * from t0112_genremessage
+	  </select>
+	  <!-- 影片国家 -->
+	  <select id="selece_nation" resultClass="cn.cinema.manage.entity.filmmanage.T0903_NATION">
+	    select * from t0903_nation 
+	  </select>
+	
+	  <!-- 片花管理 -->
+	 <select id="select_filmfimewarn" parameterClass="java.lang.Integer" resultClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+	 	select * from t0113_fimewarn fime where fime.film_d=$id$ and fime.warntype=2 order by id desc
+	 </select>
+	 <!-- 添加片花 -->	 
+	<insert id="insert_fimewarn" parameterClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+		<selectKey keyProperty="id">
+			select trim(to_char(T0113_FIMEWARN_SEQUENCE.NEXTVAL,'00000000')) FROM
+			DUAL
+	   </selectKey>
+		insert into t0113_fimewarn (id,film_d,warntype,warnpic,warndesc,addtime,prepic) values ($id$,$film_d$,$warntype$,#warnpic#,#warndesc#,sysdate,#prepic#)
+	</insert>
+	<!-- 删除片花 -->
+	 <delete id="del_fimewarn" parameterClass="java.lang.Integer">
+	 	delete from t0113_fimewarn where id=$id$
+	 </delete>
+	  <!-- 片花详细 -->
+	 <select id="select_fimewarn" parameterClass="java.lang.Integer" resultClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+	 	select * from t0113_fimewarn where id=$id$
+	 </select>
+	 <!-- 更新片花 -->
+	  <update id="update_fimewarn" parameterClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+	   update t0113_fimewarn set warnno=#warnno#, warndesc=#warndesc#, addtime=sysdate
+	   <dynamic>
+ 		<isNotEmpty property="warnpic" prepend=",">
+		        warnpic = #warnpic#
+		</isNotEmpty>
+		<isNotEmpty property="prepic" prepend=",">
+		        prepic = #prepic#
+		</isNotEmpty>
+		</dynamic>
+	    where id=$id$
+	  </update>
+	  
+	   <!-- 剧照管理 -->
+	 <select id="select_filmfimestills" parameterClass="java.lang.Integer" resultClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+	 	select * from t0113_fimewarn fime where fime.film_d=$id$ and fime.warntype=1 order by id desc
+	 </select>
+	<!-- 添加剧照 -->	 
+	<insert id="insert_fimestills" parameterClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+		<selectKey keyProperty="id">
+			select trim(to_char(T0113_FIMEWARN_SEQUENCE.NEXTVAL,'00000000')) FROM
+			DUAL
+	   </selectKey>
+		insert into t0113_fimewarn (id,film_d,warntype,warnpic,warndesc,warnpic_cut,addtime) values ($id$,$film_d$,$warntype$,#warnpic#,#warndesc#,#warnpic_cut#,sysdate)
+	</insert>
+	 <!-- 删除剧照 -->
+	 <delete id="del_fimestills" parameterClass="java.lang.Integer">
+	 	delete from t0113_fimewarn where id=$id$
+	 </delete>
+	 <!-- 剧照详细 -->
+	 <select id="select_fimestills" parameterClass="java.lang.Integer" resultClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+	 	select * from t0113_fimewarn where id=$id$
+	 </select>
+	  <!-- 更新剧照 -->
+	  <update id="update_fimestills" parameterClass="cn.cinema.manage.entity.filmmanage.T0113_FIMEWARN">
+	   update t0113_fimewarn set warndesc=#warndesc#
+	   <dynamic>
+ 		<isNotEmpty property="warnpic" prepend=",">
+		        warnpic = #warnpic#
+		</isNotEmpty>
+		<isNotEmpty property="warnpic_cut" prepend=",">
+		        warnpic_cut = #warnpic_cut#
+		</isNotEmpty>
+		</dynamic>
+	   , addtime=sysdate where id=$id$
+	  </update>
+	  <!-- 查询位置 -->
+	  <select id="select_Position" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE" parameterClass="string">
+		 select * from t0111_filmmessage t where t.id=$id$
+	  </select>
+	  <update id="update_Postion" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+	 	 update t0111_filmmessage t set t.position=$position$ where t.id=$id$ 
+	  </update>
+	  <select id="select_Position_id" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE" parameterClass="Map">
+	 	select * from t0111_filmmessage t where t.position=#twoposition# and id!=#id#
+	  </select>
+	  <update id="update_Postion_other" parameterClass="Map">
+	 	 update t0111_filmmessage t set t.position=#oneposition# where  t.position=#twoposition# and t.id!=#id# 
+	  </update>
+	   <update id="update_Postion_others" parameterClass="String">
+	  update t0111_filmmessage
+	set 	position =null
+	where id=#id#
+	</update>
+	  <!-- 发布信息-->
+	  <select id="select_release" resultClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP" parameterClass="string">
+	 		select * from t0111_filmmessage s left join t0201_feature_app t on s.filmno=t.filmno
+	 		where id=#id#
+	  </select>
+	<update id="update_release" parameterClass="Map">
+		update t0111_filmmessage set
+		release=#release#
+		where id=#id#
+	</update>
+	<!-- 验证影片编码是否重复 -->
+	<select id="select_filmmanage_filmno" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+		select filmno from t0111_filmmessage 
+		<dynamic prepend="where">
+			filmno = #filmno#
+		</dynamic>
+	</select>
+</sqlMap>

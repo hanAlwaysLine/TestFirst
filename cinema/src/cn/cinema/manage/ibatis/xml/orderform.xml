@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 查询购票管理列表 -->
+	<select id="select_orderform_list" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder"
+		resultClass="cn.cinema.manage.entity.manage.Vo_orderform">
+		select t.fid,
+		t.orderno,
+		f.filmname,
+		t.price,
+		t.countprice,
+		t.ticketsnum,
+		t.result_pay,
+		t.seatinfo,
+		h.hallname,
+		t.showdate,
+		t.showtime
+		from t0300_orderform t 
+			left join  t0201_feature_app f on t.featureappno = f.featureappno 
+			left join t0103_hallinfo h on  t.hallno = h.hallno
+		where 
+		 t.orderno = '$order_no$'
+		ORDER BY t.showdate
+	</select>
+
+	<!-- 查看售货明细 -->
+	<select id="select_orderform_goods" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder"
+		resultClass="cn.cinema.manage.entity.goods.T0300OrderList">
+		select ol.orderlist_id,
+		ol.order_no,
+		ol.goods_id,
+		tg.goods_name,
+		ol.goods_count,
+		ol.goods_price,
+		ol.goods_countprice
+		from
+		t0300_orderlist ol 
+			left join t0200_goods tg on 
+			ol.goods_id = tg.goods_id
+		where 
+		ol.order_no = #order_no#
+    </select>
+    
+    <!-- 查看活动明细 -->
+	<select id="select_orderform_activity" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder"
+		resultClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+	select a.activity_id,
+       a.title,
+       a.activestate,
+       a.cont,
+       a.actimg,
+       a.imgtype,
+       a.activity_name,
+       a.starttime,
+       a.endtime,
+       a.addtime,
+       a.actimg_h,
+       a.featureno,
+       a.seatcount
+  from t0300_userorder t 
+  	left join  t0403_activity a 
+  	on t.activity_id = a.activity_id
+ where t.order_no = #order_no#
+    </select>
+
+	<!-- 查看购票详情 -->
+	<select id="select_orderform_detail" parameterClass="cn.cinema.manage.entity.manage.Vo_orderform"
+		resultClass="cn.cinema.manage.entity.manage.Vo_orderform">
+		select f.FILMNAME,
+		(select p.placename from t0100_placeinfo p where
+		p.placeno =t.placeid ) as placename,
+		t.showdate,t.showtime,t.printedflg,
+		t.price,t.countprice,
+		(select
+		h.hallname from t0103_placehallinfo h where h.hallno = t.hallno and
+		h.placeno = t.placeid) as hallname,
+		t.ticketsnum,
+		t.seatinfo,
+		t.orderdate
+		from t0300_orderform t,t0111_filmmessage f where f.filmno =
+		t.filmno
+		<isNotEmpty prepend="and" property="fid">
+			t.fid = #fid#
+		</isNotEmpty>
+	</select>
+	
+	
+</sqlMap>

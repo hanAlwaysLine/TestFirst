@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 查询用户列表 -->
+	<select id="city_order" resultClass="cn.cinema.pojo.T0102_CiTy_Order">
+		select placeno, placename, placeorder from t0102_city_cinema 
+	</select>
+	<select id="city_cinema" resultClass="string" parameterClass="string">
+		select placename from t0102_city_cinema where placeno=#placeno#
+	</select>
+	<select id="city_cinemaall" resultClass="string" parameterClass="string">
+		select placeno from t0102_city_cinema 
+	</select>
+	<select id="queryallcinema" resultClass="cn.cinema.pojo.T0102_CiTy_Order">
+		select * from t0102_city_cinema order by placeorder
+	</select>
+	<delete id="deleall">
+		delete from t0201_feature_app
+	</delete>
+	<select id="queryfeatureappfortaday" resultClass="cn.cinema.pojo.T0201_feature_app" parameterClass="string">  
+	  select distinct t.*
+	  from t0201_feature_app t
+	 where t.flag = '1'
+	   and usesign = '0'
+	   and setclose = '1'
+	   and placeno=#placeno#
+	</select>
+	<select id="queryfeatureappfortday" resultClass="cn.cinema.pojo.T0201_feature_app" parameterClass="string">
+  	  select distinct t.*
+	  from t0201_feature_app t
+	 where t.flag = '2'
+	   and usesign = '0'
+	   and setclose = '1'
+	   and placeno=#placeno#
+	</select>
+	<select id="queryfeatureappforsday" resultClass="cn.cinema.pojo.T0201_feature_app" parameterClass="string">
+    	  select distinct t.*
+		  from t0201_feature_app t
+		 where t.flag = '3'
+		   and usesign = '0'
+		   and setclose = '1'
+		   and placeno=#placeno#
+	</select>
+</sqlMap>

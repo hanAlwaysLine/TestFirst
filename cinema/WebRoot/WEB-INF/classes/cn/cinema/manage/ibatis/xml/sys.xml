@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+   <sqlMap>
+	  <!-- 影院查询 -->
+	  <select id="select_sysDate" resultClass="java.lang.String" parameterClass="java.lang.String">
+		select trim(to_char(sysdate,#formatdate#)) from dual
+		</select>
+	<!-- 业务字典 -->
+	<select id="select_sysTemp" resultClass="java.util.HashMap" parameterClass="java.lang.String" remapResults="true">
+		$sql$
+	</select>
+	
+	<!-- 获取系统时间 -->
+	<select id="select_nowSysDate" resultClass="string">
+		select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss') from dual
+	</select>
+	
+	<!-- 地面同步错误数据到影院管理 -->
+	<insert id="upload_error" parameterClass="cn.cinema.manage.entity.manage.T0115_Backerror">
+	      insert into t0115_backerror (backerrorid,usercode,datetime,content,type,uploaddate,modelname,cinemaid)
+	      values (seq_backerror.nextval,#usercode#,#datetime#,#content#,#type#,#uploaddate#,#modelname#,#cinemaid#)
+	</insert>
+   </sqlMap>

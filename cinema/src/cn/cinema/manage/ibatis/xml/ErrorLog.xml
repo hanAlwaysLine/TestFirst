@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<insert id="insertErrorLog" parameterClass="java.util.Map">
+		<selectKey  resultClass ="int"  keyProperty ="fid"  type ="pre">
+			SELECT T0908_errorlog_SEQUENCE.NEXTVAL AS FID FROM DUAL 
+	 	</selectKey>
+	 	insert into t0908_errorlog
+		  (id, name, time, result, exception)
+		values
+		  (#FID#, #name#, #time#, #result#, #exception#)
+	</insert>
+	
+	<select id="query_errorlog" resultClass="cn.cinema.pojo.ErrorLog">
+		select * from t0908_errorlog t
+	</select>
+	
+	<select id="query_errorlog_count" resultClass="java.lang.String">
+		select count (*) from (select * from t0908_errorlog t)
+	</select>
+</sqlMap>                                                                                                                              

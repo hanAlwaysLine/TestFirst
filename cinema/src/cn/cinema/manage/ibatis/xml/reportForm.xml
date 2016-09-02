@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 客户端数量统计报表Android信息 -->
+	<select id="select_clientnum_Android" parameterClass="cn.cinema.manage.entity.reportform.T2001AppCount"
+		resultClass="cn.cinema.manage.entity.reportform.T2001AppCount">
+		select count(ac.app_id) as count, substr(ac.add_time,6,2) as add_time
+		from t2001_appcount ac
+		where ac.app_type = '1'
+		<isNotEmpty	prepend="and" property="startdate">
+			substr(add_time,0,4)>=#startdate#
+		</isNotEmpty>
+		<isNotEmpty	prepend="and" property="enddate">
+			<![CDATA[substr(add_time,0,4)<=#enddate#]]>
+		</isNotEmpty>
+		group by substr(ac.add_time,6,2)
+		order by substr(ac.add_time,6,2)
+	 </select>
+	 
+	<!-- 客户端数量统计报表IOS信息 -->
+	<select id="select_clientnum_IOS" parameterClass="cn.cinema.manage.entity.reportform.T2001AppCount"
+		resultClass="cn.cinema.manage.entity.reportform.T2001AppCount">
+		select count(ac.app_id) as count, substr(ac.add_time,6,2) as add_time
+		from t2001_appcount ac
+		where ac.app_type = '2'
+		<isNotEmpty	prepend="and" property="startdate">
+			substr(add_time,0,4)>=#startdate#
+		</isNotEmpty>
+		<isNotEmpty	prepend="and" property="enddate">
+			<![CDATA[substr(add_time,0,4)<=#enddate#]]>
+		</isNotEmpty>
+		group by substr(ac.add_time,6,2)
+		order by substr(ac.add_time,6,2)
+	 </select>
+	 
+	 <!-- 客户端数量统计报表总信息 -->
+	<select id="select_clientnum_sum" parameterClass="cn.cinema.manage.entity.reportform.T2001AppCount"
+		resultClass="cn.cinema.manage.entity.reportform.T2001AppCount">
+		select count(ac.app_id) as count, substr(ac.add_time,6,2) as add_time
+  		from t2001_appcount ac
+  		where 1=1
+  		<isNotEmpty	prepend="and" property="startdate">
+			substr(add_time,0,4)>=#startdate#
+		</isNotEmpty>
+		<isNotEmpty	prepend="and" property="enddate">
+			<![CDATA[substr(add_time,0,4)<=#enddate#]]>
+		</isNotEmpty>
+ 		group by substr(ac.add_time,6,2)
+ 		order by substr(ac.add_time,6,2)
+	 </select>
+
+	<!-- 查询订单统计报表信息 -->
+	<select id="select_orderstatistics_Info" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder" 
+		resultClass="cn.cinema.manage.entity.ticket.T0300_UserOrder">
+	select count(a.order_no) as count,
+       sum(a.price) as order_price,
+       substr(a.order_time, 6, 2) as order_time,
+       a.appcode
+  from (select t.order_no,
+               o.price,
+               t.order_time,
+               t.order_type,
+               t.appcode,
+               t.pay_status
+          from t0300_userorder t, t0300_orderform o
+         where t.order_no = o.orderno
+           and t.order_type = '1'
+        union all
+        select t.order_no,
+               ol.goods_price,
+               t.order_time,
+               t.order_type,
+               t.appcode,
+               t.pay_status
+          from t0300_userorder t, t0300_orderlist ol
+         where t.order_no = ol.order_no
+           and t.order_type = '2'
+        union all
+        select hh.order_no,
+               hh.price,
+               hh.order_time,
+               hh.order_type,
+               hh.appcode,
+               hh.pay_status
+          from (select t.order_no,
+                       o.price,
+                       t.order_time,
+                       t.order_type,
+                       t.appcode,
+                       t.pay_status
+                  from t0300_userorder t, t0300_orderform o
+                 where t.order_no = o.orderno
+                   and t.order_type = '3'
+                union all
+                select t.order_no,
+                       ol.goods_price,
+                       t.order_time,
+                       t.order_type,
+                       t.appcode,
+                       t.pay_status
+                  from t0300_userorder t, t0300_orderlist ol
+                 where t.order_no = ol.order_no
+                   and t.order_type = '3') hh) a
+ where a.pay_status = '1'
+ 	<isNotEmpty prepend="and" property="appcode">
+ 		a.appcode = #appcode#
+ 	</isNotEmpty>  
+   	<isNotEmpty	prepend="and" property="startDate">
+		substr(a.order_time,0,4)>=#startDate#
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="endDate">
+		<![CDATA[substr(a.order_time,0,4)<=#endDate#]]>
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="order_type">
+		a.order_type=#order_type#
+	</isNotEmpty>
+ group by substr(a.order_time, 6, 2), a.appcode
+ order by substr(a.order_time, 6, 2)
+	</select>
+	
+	<!-- 查询订单统计报表总数信息 -->
+	<select id="select_orderstatistics_all" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder" 
+		resultClass="cn.cinema.manage.entity.ticket.T0300_UserOrder">
+	select count(a.order_no) as count,
+       sum(a.price) as order_price,
+       substr(a.order_time, 6, 2) as order_time
+  from (select t.order_no,
+               o.price,
+               t.order_time,
+               t.order_type,
+               t.appcode,
+               t.pay_status
+          from t0300_userorder t, t0300_orderform o
+         where t.order_no = o.orderno
+           and t.order_type = '1'
+        union all
+        select t.order_no,
+               ol.goods_price,
+               t.order_time,
+               t.order_type,
+               t.appcode,
+               t.pay_status
+          from t0300_userorder t, t0300_orderlist ol
+         where t.order_no = ol.order_no
+           and t.order_type = '2'
+        union all
+        select hh.order_no,
+               hh.price,
+               hh.order_time,
+               hh.order_type,
+               hh.appcode,
+               hh.pay_status
+          from (select t.order_no,
+                       o.price,
+                       t.order_time,
+                       t.order_type,
+                       t.appcode,
+                       t.pay_status
+                  from t0300_userorder t, t0300_orderform o
+                 where t.order_no = o.orderno
+                   and t.order_type = '3'
+                union all
+                select t.order_no,
+                       ol.goods_price,
+                       t.order_time,
+                       t.order_type,
+                       t.appcode,
+                       t.pay_status
+                  from t0300_userorder t, t0300_orderlist ol
+                 where t.order_no = ol.order_no
+                   and t.order_type = '3') hh) a
+ where a.pay_status = '1'
+ 	<isNotEmpty	prepend="and" property="startDate">
+		substr(a.order_time,0,4)>=#startDate#
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="endDate">
+		<![CDATA[substr(a.order_time,0,4)<=#endDate#]]>
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="order_type">
+		a.order_type=#order_type#
+	</isNotEmpty>
+ group by substr(a.order_time, 6, 2)
+ order by substr(a.order_time, 6, 2)
+	</select>
+	
+	
+	<!-- 会员数量统计报表新增数量查询 -->
+	<select id="select_membernum_newadd" parameterClass="cn.cinema.manage.entity.reportform.MemberNum"
+		resultClass="cn.cinema.manage.entity.reportform.MemberNum">
+	select count(t.user_id) as count, to_char(t.user_time, 'mm') as usertime
+  	from t1000_user t where 1=1
+  	<isNotEmpty	prepend="and" property="startdate">
+		to_char(t.user_time, 'yyyy')>=#startdate#
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="enddate">
+		<![CDATA[to_char(t.user_time, 'yyyy')<=#enddate#]]>
+	</isNotEmpty>
+ 	group by to_char(t.user_time, 'mm')
+ 	order by to_char(t.user_time, 'mm')
+	</select>
+	
+	<!-- 对账报表数据查询 -->
+	<select id="select_reconciliation_info" parameterClass="cn.cinema.manage.entity.reportform.Reconciliation" 
+			resultClass="cn.cinema.manage.entity.reportform.Reconciliation">
+	select *
+  		from (select u.order_no,
+               f.featureappno,
+               f.filmname,
+               f.hallname,
+               f.featuredate,
+               f.apppric,
+               o.ticketsnum,
+               (f.apppric * o.ticketsnum) order_price,
+               decode(u.pay_type,
+                      '1',
+                      '会员卡支付',
+                      '2',
+                      '微信支付',
+                      '3',
+                      '支付宝支付') pay_type,
+               u.order_time,
+               decode(u.appcode,
+                      '1',
+                      '网站',
+                      '2',
+                      'Andorid',
+                      '3',
+                      'IOS',
+                      '4',
+                      '微信') appcode
+          from t0201_feature_app f, t0300_orderform o, t0300_userorder u
+         where f.featureappno = o.featureappno
+           and o.orderno = u.order_no
+           <isNotEmpty prepend="and" property="startdate">
+           f.featuredate>=#startdate#
+           </isNotEmpty>
+           <isNotEmpty prepend="and" property="enddate">
+           <![CDATA[f.featuredate<=#enddate#]]>
+           </isNotEmpty>
+           <isNotEmpty prepend="and" property="filmname">
+           f.filmname like '%'||#filmname#||'%'
+           </isNotEmpty>
+        union
+        select -1,
+               0,
+               '总计',
+               '',
+               '',
+               0,
+               sum(o.ticketsnum),
+               sum(f.apppric * o.ticketsnum),
+               '',
+               '',
+               ''
+          from t0201_feature_app f, t0300_orderform o, t0300_userorder u
+         where f.featureappno = o.featureappno
+           and o.orderno = u.order_no
+           <isNotEmpty prepend="and" property="startdate">
+           f.featuredate>=#startdate#
+           </isNotEmpty>
+           <isNotEmpty prepend="and" property="enddate">
+           <![CDATA[f.featuredate<=#enddate#]]>
+           </isNotEmpty>
+           <isNotEmpty prepend="and" property="filmname">
+           f.filmname like '%'||#filmname#||'%'
+           </isNotEmpty>
+           )
+ 	order by order_no desc
+	</select>
+	<!--******************************************* 导出sql *********************************************-->
+	
+	<!-- 订单统计导出 -->
+	<select id="select_orderstatistics_excel" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder" 
+		resultClass="cn.cinema.manage.entity.ticket.T0300_UserOrder">
+	select t.order_no,
+       u.user_name,
+       t.order_time,
+       t.order_price,
+       decode(t.order_type,'1','影片订单','2','卖品订单','3','综合订单','4','活动订单') order_type,
+       decode(t.pay_status,'0','待支付','1','已支付') pay_status,
+       decode(t.appcode,'1','网站','2','Andorid','3','IOS','4','微信') appcode,
+       decode(t.receive_status,'0','未领取','1','已领取') receive_status,
+       t.receive_time,
+       au.name
+  from t0300_userorder t, t1000_user u, t0001_ad_user au
+ where t.user_id = u.user_id
+   and t.oper_id = au.id
+	<isNotEmpty prepend="and" property="appcode">
+ 		t.appcode = #appcode#
+ 	</isNotEmpty>  
+   	<isNotEmpty	prepend="and" property="startDate">
+		substr(t.order_time,0,4)>=#startDate#
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="endDate">
+		<![CDATA[substr(t.order_time,0,4)<=#endDate#]]>
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="order_type">
+		t.order_type=#order_type#
+	</isNotEmpty>
+ 		order by t.appcode,t.order_time desc
+	</select>
+	
+	<!-- 会员数量统计报表导出 -->
+	<select id="select_membernum_excel" parameterClass="cn.cinema.manage.entity.reportform.MemberNum"
+		resultClass="cn.cinema.manage.entity.sys.T1000_Users">
+	select t.user_id,
+       nvl(t.user_name,' ') user_name,
+       t.user_mobile,
+       nvl(t.user_cardcode,' ') cardcode,
+       t.user_time,
+       nvl(t.weixin_code,' ') weixin_code,
+       decode(t.user_app,'1','网站','2','Andorid','3','IOS','4','微信',' ') user_app
+  from t1000_user t where 1=1
+  	<isNotEmpty	prepend="and" property="startdate">
+		to_char(t.user_time, 'yyyy')>=#startdate#
+	</isNotEmpty>
+	<isNotEmpty	prepend="and" property="enddate">
+		<![CDATA[to_char(t.user_time, 'yyyy')<=#enddate#]]>
+	</isNotEmpty>
+ 	order by t.user_time desc
+	</select>
+	
+	<!-- 客户端数量统计报表导出 -->
+	<select id="select_clientnum_excel" parameterClass="cn.cinema.manage.entity.reportform.T2001AppCount"
+		resultClass="cn.cinema.manage.entity.reportform.T2001AppCount">
+	select *
+  from (select decode(ac.app_type, '1', 'Android', '2', 'IOS') app_type,
+               count(ac.app_id) count,
+               substr(ac.add_time, 0, 10) add_time
+          from t2001_appcount ac where 1=1
+     	<isNotEmpty	prepend="and" property="app_type">
+			ac.app_type=#app_type#
+		</isNotEmpty>
+ 		<isNotEmpty	prepend="and" property="startdate">
+			substr(ac.add_time,0,4)>=#startdate#
+		</isNotEmpty>
+		<isNotEmpty	prepend="and" property="enddate">
+			<![CDATA[substr(ac.add_time,0,4)<=#enddate#]]>
+		</isNotEmpty>
+         group by ac.app_type, substr(ac.add_time, 0, 10)
+        union
+        select '总数' app_type, count(ac.app_id) count, ' ' add_time
+          from t2001_appcount ac where 1=1
+        <isNotEmpty	prepend="and" property="app_type">
+        	<isNotEqual property="app_type" compareValue="3">
+        		ac.app_type=#app_type#
+        	</isNotEqual>
+		</isNotEmpty>
+ 		<isNotEmpty	prepend="and" property="startdate">
+			substr(ac.add_time,0,4)>=#startdate#
+		</isNotEmpty>
+		<isNotEmpty	prepend="and" property="enddate">
+			<![CDATA[substr(ac.add_time,0,4)<=#enddate#]]>
+		</isNotEmpty>
+          ) t 
+ 		order by t.app_type, substr(t.add_time, 0, 10) desc
+	</select>
+</sqlMap>

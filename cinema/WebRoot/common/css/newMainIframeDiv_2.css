@@ -1,0 +1,171 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	font-family:"微软雅黑";
+	font-size:12px;
+	clear:both;
+}
+
+.menuUl{
+	padding:0; margin-left:10px;
+    list-style-type: none; 
+}
+.menuUl li{
+	display:inline;
+	float:left;
+	padding: -1 8px;
+}
+
+.divMenu{
+	padding-left: 18px;
+}
+
+
+.inputText{/*圆角背景图+input text*/
+	background-image:url(/cinema/common/imgs/inputTextBorder.png);
+	background-repeat:no-repeat;
+	width:255px;
+	height:27px;
+	text-align:left;
+	vertical-align:middle;
+	padding-top:2px;
+	padding-top:4px\9;
+	padding-left: 5px;
+	font-size:12px;
+}
+.inputText samp{
+	font-family:"微软雅黑", "宋体";
+	font-size:12px;
+}
+.inputText input{
+	border-width:0px;
+	background-color:#d3d3d3;
+}
+*.inputText input,.inputText span{float:left;}
+
+*.inputText span{line-height:22px;}
+#select{
+	border-top-color:#7f7f7f;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-bottom-color: #7f7f7f;
+	border-right-width: 0px;
+	border-left-width: 0px;
+	border-right-style: none;
+	border-left-style: none;
+	background-color: #d3d3d3;
+}
+
+
+.divWhite{
+	margin:10px;
+	background-color:#f2f2f2;
+	width:98%\9;		/*针对IE样式*/
+}
+
+.data{
+	font-size:12px;
+	text-align:center;
+	width:100%;
+	border:0px;
+	border-collapse:collapse;
+}
+.data th{
+	font-weight:100;
+}
+.data td{
+	border-width: thin;
+	border-color:#999;
+	border-style:solid;
+	border-spacing:0px;
+	height:20px;
+	line-height:20px;
+}
+#page{
+	text-align:right;
+	
+}
+
+.button_60{
+	background: url(/cinema/common/imgs/button.png) no-repeat;
+	text-align:center;
+	width:66px;
+	font-family: "微软雅黑", "宋体";
+	font-size: 12px;
+	border:none;
+	height:24px;
+	color: #6d6d6d;
+}
+
+.button_76{
+	background:url(/cinema/common/imgs/button_76.png) no-repeat;
+	width:76px;
+	font-family: "微软雅黑", "宋体";
+	font-size: 12px;
+	border:none;
+	height:24px;
+	color: #6d6d6d;
+}
+
+.button_103{
+	background:url(/cinema/common/imgs/button_103.png) no-repeat;
+	width:103px;
+	font-family: "微软雅黑", "宋体";
+	font-size: 12px;
+	border:none;
+	height:24px;
+	color: #6d6d6d;
+}
+
+.button_sml{
+	background:url(/cinema/common/img/btnSmall.png) no-repeat;
+	width:49px;
+	font-family: "微软雅黑", "宋体";
+	font-size: 12px;
+	border:none;
+	height:24px;
+	color: #6d6d6d;
+	padding-bottom: 5px;
+	margin: 2px;
+}
+
+
+/*圆角输入框*/
+.xtop, .xbottom {
+	display:block; 
+	background:transparent; 
+	font-size:1px;
+}
+.xb1, .xb2, .xb3, .xb4 {
+	display:block;
+	overflow:hidden;
+}
+.xb1, .xb2, .xb3 {
+	height:1px;
+}
+.xb2, .xb3, .xb4 {
+	background:#7f7f7f; /*上下边*/
+	border-left:1px solid #7f7f7f; /*四角*/
+	border-right:1px solid #7f7f7f;
+}
+.xb1 {margin:0 3px; background:#524e4c;} /*上下边线*/
+.xb2 {margin:0 2px; border-width:0 3px;}
+.xb3 {margin:0 1px;}
+.xb4 {height:1px; margin:0 1px;}
+.xboxcontent {
+	display:block; 
+	background:#d3d3d3; 
+	border:0 solid #7f7f7f; /*左右边钱*/
+	border-width:0 2px;
+	height:25px;
+	padding-top:1px;
+	letter-spacing:1px;
+	padding-left:10px;
+	padding-right:10PX;
+}
+a{text-decoration:none;color:#004A81;}
+
+.font-style{position:relative;width:100%;text-align:left;}
+.font-style font{position:absolute;top:7px;left:169px;}

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<!-- 根据ID查询活动-->
+	<select id="sel_activity"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement"
+		resultClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+		select * from t0403_activity where
+		activity_id=#according_id#
+	 </select>
+
+	<!-- 查询影院-->
+	<select id="select_cinema" resultClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo"
+		parameterClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo">
+		select * from T0100_PlaceInfo t where t.cityno=#cityno#
+	</select>
+	<select id="sel_advertise"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement"
+		resultClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		select * from t0405_advertisement where
+		advertise_id=#advertise_id#
+    </select>
+
+	<!-- 根据ID活动查询 -->
+	<select id="query_advertise"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement"
+		resultClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		select a.advertise_id,
+		a.according_id,
+		a.advertisement_type
+		from t0405_advertisement a, t0100_placeinfo b
+		where a.placeinfo_id =
+		b.id(+)
+		and a.advertise_id = #advertise_id#
+	 </select>
+
+	<!--查询轮播图  -->
+	<select id="select_filmmsg" resultClass="java.util.HashMap">
+		select t.id,
+       t.filmname,
+       decode(image, '', '/filmpic/moren.jpg', image) as image,
+       s.advertise_id,
+       s.according_id,
+       s.locale
+  from t0111_filmmessage t
+ inner join (select a.advertise_id, a.according_id, a.locale
+               from t0405_advertisement a
+              where a.advertisement_type = 1
+              order by a.according_id) s on t.id = s.according_id
+ order by t.id desc
+	</select>
+
+	<select id="select_filmmsgcount" resultClass="java.lang.String">
+		select count(t.id)
+  from t0111_filmmessage t
+ inner join (select a.advertise_id, a.according_id, a.locale
+               from t0405_advertisement a
+              where a.advertisement_type = 1
+              order by a.according_id) s on t.id = s.according_id
+ order by t.id desc
+	</select>
+
+
+	<!--查询广告图  -->
+	<!--  -->
+	<select id="select_admsg" resultClass="java.util.HashMap">
+	select t.activity_id,
+       t.activity_name,
+       decode(actimg, '', '/activity/moren.jpg', actimg) as actimg,
+       s.advertise_id,
+       s.advertisement_type
+  from t0403_activity t
+ inner join (select a.advertise_id,
+                    a.according_id,
+                    a.locale,
+                    a.position,
+                    a.cityno,
+                    a.advertisement_type
+               from t0405_advertisement a
+              where a.advertisement_type like '2%') s on t.activity_id =
+                                                         s.according_id
+ order by s.position
+	</select>
+
+	<select id="select_admsgcount" resultClass="java.lang.String">
+		select count(t.activity_id)
+  from t0403_activity t
+ inner join (select a.advertise_id,
+                    a.according_id,
+                    a.locale,
+                    a.position,
+                    a.cityno,
+                    a.advertisement_type
+               from t0405_advertisement a
+              where a.advertisement_type like '2%') s on t.activity_id =
+                                                         s.according_id
+ order by s.position
+	</select>
+
+
+	<!--查询活动图  -->
+	<!--  -->
+	<select id="select_actmsg" resultClass="java.util.HashMap">
+		select t.activity_id,
+       t.activity_name,
+       decode(actimg, '', '/activity/moren.jpg', actimg) as actimg,
+       s.advertise_id,
+       s.advertisement_type
+  from t0403_activity t
+ inner join (select a.advertise_id,
+                    a.according_id,
+                    a.locale,
+                    a.position,
+                    a.cityno,
+                    a.advertisement_type
+               from t0405_advertisement a
+              where a.advertisement_type like '3%') s on t.activity_id = s.according_id
+ order by s.position	
+	</select>
+
+	<select id="select_actmsgcount" resultClass="java.lang.String">
+		select count(t.activity_id)
+  from t0403_activity t
+ inner join (select a.advertise_id,
+                    a.according_id,
+                    a.locale,
+                    a.position,
+                    a.cityno,
+                    a.advertisement_type
+               from t0405_advertisement a
+              where a.advertisement_type like '3%') s on t.activity_id = s.according_id
+ order by s.position
+	</select>
+
+
+	<!-- 删除广告 -->
+	<delete id="delete_advertise"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		delete from t0405_advertisement t
+		where
+		t.advertise_id=#advertise_id#
+    </delete>
+	<!-- 添加广告 -->
+	<insert id="insert_advertise"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		insert into t0405_advertisement
+		(advertise_id,according_id,advertisement_type,cityno,locale)
+		values
+		(SEQ_ADVERTISEMENT.NEXTVAL,#according_id#,#advertisement_type#,#cityno#,#locale#)
+	</insert>
+	<!-- 修改广告信息 -->
+	<update id="update_advertise"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		update t0405_advertisement set
+		according_id=#according_id#,placeinfo_id=#placeinfo_id#,locale=#locale#,cityno=#cityno#,advertisement_type=#advertisement_type#
+		where advertise_id=#advertise_id#
+    </update>
+	<!-- 修改其他位置信息-->
+	<update id="update_Position_Other" parameterClass="Map">
+		update
+		t0405_advertisement t set
+		t.position=#position#
+		where
+		t.position=(#prepos#) and t.advertisement_type =
+		'$advertisement_type$' and t.cityno =#cityno#
+    </update>
+	<!-- 修改位置信息-->
+	<update id="update_Position"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		update t0405_advertisement set
+		position=#position#
+		where
+		advertise_id
+		=#advertise_id# and advertisement_type =
+		'$advertisement_type$' and
+		cityno =#cityno#
+    </update>
+
+	<select id="queryfsg" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE"
+		resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+		select * from t0111_filmmessage where id=#id#
+    </select>
+
+	<!-- 根据ID活动查询 -->
+	<select id="query_act" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity"
+		resultClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+		select * from t0403_activity where
+		activity_id=#activity_id# and
+		activestate=1
+	</select>
+
+	<!-- 查询广告是否是5条 -->
+	<select id="count_advertisement"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement"
+		resultClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		select * from t0405_advertisement t where t.cityno =
+		#cityno# and t.advertisement_type =#advertisement_type#
+	</select>
+
+	<select id="sum_advertisement"
+		parameterClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement"
+		resultClass="cn.cinema.manage.entity.advertisemanage.T0405Advertisement">
+		select * from t0405_advertisement t where
+		advertisement_type = 1
+	</select>
+
+	<!-- 删除对应影片的首页轮播图 -->
+	<delete id="del_advertise" parameterClass="java.lang.Integer">
+		delete from
+		t0405_advertisement where according_id=$id$
+	</delete>
+
+	<!-- 删除对应活动的广告信息 -->
+	<delete id="delete_activity_advertise" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+		delete
+		from t0405_advertisement t
+		where t.according_id=#activity_id#
+    </delete>
+</sqlMap>

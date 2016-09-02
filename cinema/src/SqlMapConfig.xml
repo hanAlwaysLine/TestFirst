@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+<!-- 登陆 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/login.xml"/>
+<!-- 影院管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/placeinfo.xml" />
+<!-- 用户管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/user.xml"/>
+<!-- 系统通用 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/sys.xml"/>
+<!-- 角色管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/userRole.xml"/>
+<!-- 参数列表 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/params.xml"/>
+<!-- 影片管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/filmmanage.xml"/>
+
+<!-- 排期管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/featuremanage.xml"/>
+<!-- 活动管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/activity.xml"/>
+<!-- 广告管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/advertise.xml"/>
+<!-- 购票管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/orderform.xml"/>
+<!-- 定时更新取票状态 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/orderstatus.xml"/>
+<!-- 定时更新排期座位数 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/featurestate.xml"/>
+<!-- 接口调用异常记录-->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/ErrorLog.xml"/>
+<!-- 影厅管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/hall.xml"/>
+
+<sqlMap resource="cn/cinema/manage/ibatis/xml/order.xml"/>
+<!-- 卖品管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/goods.xml"/>
+<!-- 订单 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/userorder.xml"/>
+<!-- 客户端接口 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/service.xml"/>
+<!-- 图片管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/picture.xml"/>
+<!--报表管理 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/reportForm.xml"/>
+<!--上传广告页面 -->
+<sqlMap resource="cn/cinema/manage/ibatis/xml/uploadhtml.xml"/>
+</sqlMapConfig>

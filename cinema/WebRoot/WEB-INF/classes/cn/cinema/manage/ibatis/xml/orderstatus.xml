@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+   <sqlMap>
+	 
+	 <!-- 查询支付成功的 未取票的订单-->
+	 <select id="queryOrderList" resultClass="cn.cinema.pojo.T0300_ORDERFORM">
+	   <![CDATA[select t.* from t0300_orderform t where t.result = '0' and t.printedflg <> 'Y']]>
+	 </select>
+	 <update id="updateOrderflg" parameterClass="cn.cinema.pojo.T0300_ORDERFORM">
+		 update t0300_orderform
+		   set printedflg = 'Y'
+		 where orderno = #orderno#
+	 </update>
+   </sqlMap>

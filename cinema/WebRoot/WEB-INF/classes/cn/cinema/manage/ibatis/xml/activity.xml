@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+   <sqlMap>
+	 
+	 <!-- 根据ID活动查询 -->
+	 <select id="query_activity" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity" resultClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+	    select * from t0403_activity where activity_id=#activity_id#
+	 </select>
+	 
+	 <select id="activity.city" resultClass="cn.cinema.manage.entity.manage.T0904_City">
+	   select * from t0904_city t
+     </select>
+	   <!-- 活动查询 -->
+	<select id="select_activity" resultClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+		select * from t0403_activity  t
+		<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="activity_name">
+				activity_name like '%'||#activity_name#||'%'
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="starttime">
+				starttime &lt;= to_date(to_char(#endtime#, 'yyyy-mm-dd')||'23:59:59','yyyy-mm-dd hh24:mi:ss')
+		    </isNotEmpty>
+		    <isNotEmpty prepend="and" property="endtime">
+				endtime &gt;= to_date(to_char(#starttime#, 'yyyy-mm-dd')||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+		    </isNotEmpty>
+		</dynamic>
+		order by t.addtime desc
+	  </select>
+	   <!-- 活动总数 -->
+	<select id="select_activitycount" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity"
+		resultClass="java.lang.String">
+		select count(*) from t0403_activity  t
+		<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="activity_name">
+				activity_name like '%'||#activity_name#||'%'
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="starttime">
+				starttime &lt;= to_date(to_char(#endtime#, 'yyyy-mm-dd')||'23:59:59','yyyy-mm-dd hh24:mi:ss')
+		    </isNotEmpty>
+		    <isNotEmpty prepend="and" property="endtime">
+				endtime &gt;= to_date(to_char(#starttime#, 'yyyy-mm-dd')||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+		    </isNotEmpty>
+		</dynamic>
+	</select>
+       <!-- 新增活动 -->
+    <insert id="insert_activity"  parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+        insert into t0403_activity
+		(activity_id,activity_name,title,starttime,endtime,addtime,cont,activestate,imgtype,actimg,actimg_h,featureno,seatcount,price,appcode,count)
+		values
+		(SEQ_ACTIVITY.NEXTVAL,#activity_name#,#title#,#starttime#,#endtime#,#addtime#,#cont#,#activestate#,#imgtype#,#actimg#,#actimg_h#,#featureno#,#seatcount#,#price#,#appcode#,#count#)
+    </insert>
+       <!-- 删除活动 -->
+	<update id="delete_activity" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+		update  t0403_activity t set delflag=1
+		where t.activity_id=#activity_id#
+    </update>
+       <!-- 发布活动 -->
+    <update id="release_activity" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+        update t0403_activity set
+		activestate=1
+		where activity_id=#activity_id#
+    </update>
+       <!-- 修改活动信息 -->
+    <update id="update_activity" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+    update t0403_activity set
+		activity_name=#activity_name#,title=#title#,starttime=#starttime#,endtime=#endtime#,cont=#cont#,activestate=#activestate#,imgtype=#imgtype#,featureno=#featureno#,seatcount=#seatcount#,price=#price#,appcode=#appcode#,count=#count#
+		<dynamic>
+ 		<isNotEmpty property="actimg" prepend=",">
+		        actimg = #actimg#
+		</isNotEmpty>
+		<isNotEmpty property="actimg_h" prepend=",">
+		        actimg_h = #actimg_h#
+		</isNotEmpty>
+		</dynamic>
+		where activity_id=#activity_id#
+    </update>
+    
+    <update id="update_actimg" parameterClass="cn.cinema.manage.entity.Activitymanage.T0403Activity">
+     update t0403_activity set actimg = #actimg#
+     <isNotEmpty property="actimg_h" prepend=",">
+		        actimg_h = #actimg_h#
+		</isNotEmpty>
+     where activity_id=#activity_id#
+    </update>
+   </sqlMap>

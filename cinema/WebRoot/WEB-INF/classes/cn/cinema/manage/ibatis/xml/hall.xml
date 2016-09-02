@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 影厅查询 -->
+	<select id="select_hall" resultClass="cn.cinema.manage.entity.manage.T0103_HallInfo">
+		select t.hallno, t.hallname, t.hallename, t.hallseat, t.halltext
+  		from t0103_hallinfo t where 1=1
+		<isNotEmpty prepend="and" property="hallname">
+			t.hallname like '%$hallname$%'
+	 	</isNotEmpty>
+	 	order by t.hallname desc
+	</select>
+	<!-- 影厅总数 -->
+	<select id="select_hallcount" parameterClass="cn.cinema.manage.entity.manage.T0103_HallInfo"
+		resultClass="java.lang.String">
+		select count(t.hallno) from t0103_hallinfo t where 1=1
+		<isNotEmpty prepend="and" property="hallname">
+			t.hallname like '%$hallname$%'
+	 	</isNotEmpty>
+	</select>
+
+	<!-- 添加影厅 -->
+	<insert id="insert_hall" parameterClass="cn.cinema.manage.entity.manage.T0103_HallInfo">
+		insert into t0103_hallinfo (hallno, hallname, hallename, hallseat, halltext)
+		values (#hallno#, #hallname#, #hallename#, #hallseat#, #halltext#)
+	</insert>
+	
+	<!-- 根据ID查询影厅信息 -->
+	<select id="query_hall_byid" parameterClass="cn.cinema.manage.entity.manage.T0103_HallInfo"
+		resultClass="cn.cinema.manage.entity.manage.T0103_HallInfo">
+		select t.hallno, t.hallname, t.hallename, t.hallseat, t.halltext
+  		from t0103_hallinfo t where t.hallno=#hallno#
+	 </select>
+	 
+	 <!-- 根据name查询影厅信息 -->
+	<select id="query_hall_byname" parameterClass="cn.cinema.manage.entity.manage.T0103_HallInfo"
+		resultClass="cn.cinema.manage.entity.manage.T0103_HallInfo">
+		select t.hallno
+  		from t0103_hallinfo t where t.hallname=#hallname#
+	 </select>
+
+	<!-- 修改影厅信息 -->
+	<update id="update_hallinfo" parameterClass="cn.cinema.manage.entity.manage.T0103_HallInfo">
+		update T0103_HallInfo set hallno=#hallno#,hallname=#hallname#,halltext=#halltext#,hallename=#hallename#
+		where hallno=#hallno#
+    </update>
+	
+	<!-- 删除影厅信息 -->
+	<delete id="del_hallinfo" parameterClass="cn.cinema.manage.entity.manage.T0103_HallInfo">
+		delete from T0103_HallInfo where hallno=$hallno$
+	</delete>
+</sqlMap>

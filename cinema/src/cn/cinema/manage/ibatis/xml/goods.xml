@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<!-- 卖品查询 -->
+	<select id="select_goods" resultClass="cn.cinema.manage.entity.goods.T0200Goods">
+		select goods_id, goods_name, goods_price, goods_type, goods_pic, is_discount, goods_count, goods_memo from T0200_GOODS t
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="GOODS_NAME">
+				GOODS_NAME like
+				'%$GOODS_NAME$%'
+	 		</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<!-- 卖品总数 -->
+	<select id="select_goodscount" parameterClass="cn.cinema.manage.entity.goods.T0200Goods"
+		resultClass="java.lang.String">
+		select count(t.GOODS_NAME) from T0200_GOODS t
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="GOODS_NAME">
+				GOODS_NAME like
+				'%$GOODS_NAME$%'
+	 		</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<!-- 根据主键查询卖品信息 -->
+	<select id="query_goods" parameterClass="cn.cinema.manage.entity.goods.T0200Goods"
+		resultClass="cn.cinema.manage.entity.goods.T0200Goods">
+		select * from T0200_GOODS where GOODS_ID=$GOODS_ID$
+	</select>
+	
+	<!-- 根据名称查询卖品信息 -->
+	<select id="query_goods_ByName" parameterClass="cn.cinema.manage.entity.goods.T0200Goods"
+		resultClass="cn.cinema.manage.entity.goods.T0200Goods">
+		select * from T0200_GOODS where GOODS_NAME=#GOODS_NAME#
+	</select>
+
+	<!-- 更新卖品信息 -->
+	<update id="update_goods" parameterClass="cn.cinema.manage.entity.goods.T0200Goods">
+		update T0200_GOODS set
+		GOODS_NAME=#GOODS_NAME#,GOODS_PRICE=#GOODS_PRICE#,GOODS_TYPE=#GOODS_TYPE#,GOODS_PIC=#GOODS_PIC#,IS_DISCOUNT=#IS_DISCOUNT#,GOODS_COUNT=$GOODS_COUNT$,GOODS_MEMO=#GOODS_MEMO#
+		where GOODS_ID=$GOODS_ID$
+    </update>
+
+	<!-- 添加卖品 -->
+	<insert id="insert_goods" parameterClass="cn.cinema.manage.entity.goods.T0200Goods">
+		insert into T0200_GOODS
+		(GOODS_ID,
+		GOODS_NAME,GOODS_PRICE,GOODS_TYPE,GOODS_PIC,IS_DISCOUNT,GOODS_COUNT,GOODS_MEMO)values(T0200_GOODS_SEQUENCE.NEXTVAL,#GOODS_NAME#,#GOODS_PRICE#,#GOODS_TYPE#,#GOODS_PIC#,#IS_DISCOUNT#,$GOODS_COUNT$,#GOODS_MEMO#)
+	</insert>
+
+	<!-- 删除卖品信息 -->
+	<delete id="del_goods" parameterClass="cn.cinema.manage.entity.goods.T0200Goods">
+		delete from T0200_GOODS
+		where GOODS_ID=$GOODS_ID$
+	</delete>
+</sqlMap>

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 影院查询 -->
+	<select id="select_cmanage" parameterClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo" resultClass="java.util.HashMap">
+		select t.*,c.cityname from t0100_placeinfo t,t0904_city c where t.cityno = c.id
+		<isNotEmpty prepend="and" property="placename">
+			t.placename like '%$placename$%'
+ 			</isNotEmpty>
+		<isNotEmpty prepend="and" property="cityno">
+			cityno = '$cityno$'
+ 			</isNotEmpty>
+ 		<isNotEmpty prepend="and" property="usable">
+			usable = '$usable$'
+ 			</isNotEmpty>
+		order by t.id desc 
+	</select>
+	<!-- 查询总数 -->
+	<select id="select_cmanage_count" parameterClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo"
+		resultClass="java.lang.String">
+		select count(t.id) from t0100_placeinfo t,t0904_city c where t.cityno = c.id
+		<isNotEmpty prepend="and" property="placename">
+			placename like '%$placename$%'
+ 			</isNotEmpty>
+		<isNotEmpty prepend="and" property="cityno">
+			cityno = '$cityno$'
+ 			</isNotEmpty>
+		<isNotEmpty prepend="and" property="usable">
+		usable = '$usable$'
+			</isNotEmpty>
+	</select>
+	<!-- 影院管理添加 -->
+	<insert id="insert_cmanage" parameterClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo">
+		insert into t0100_placeinfo
+		(id,placename,placeno,company,cityno,information,business_hours,route,image,cinemalinkid,phone,postion,addtime,usable,weibolink,address,mappic,vipalert)
+		values
+		(T0100_PLACEINFO_SEQUENCE.NEXTVAL,#placename#,#placeno#,#company#,#cityno#,#information#,#business_hours#,#route#,#image#,#cinemalinkid#,#phone#,#postion#,to_char(sysdate),0,#weibolink#,#address#,#mappic#,#vipalert#)
+	</insert>
+	<!-- 删除影院管理信息 -->
+	<delete id="delete_cmanage" parameterClass="java.lang.Integer">
+		delete from t0100_placeinfo where id=$id$
+	</delete>
+	<!-- 详细内容 -->
+	<select id="select_placeinfo" parameterClass="java.lang.Integer"
+		resultClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo">
+		select * from t0100_placeinfo t where t.id=$id$
+	  </select>
+	<!-- 执行修改 -->
+	<update id="update_placeinfo" parameterClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo">
+		update t0100_placeinfo set
+		placeno=#placeno#,placename=#placename#,cityno=#cityno#,company=#company#,cinemalinkid=#cinemalinkid#,information=#information#,business_hours=#business_hours#,route=#route#,phone=#phone#,postion=#postion#,usable=0,weibolink=#weibolink#,address=#address#,vipalert=#vipalert#
+		<isNotEmpty prepend="," property="image">
+			image=#image#
+ 		</isNotEmpty>
+ 		<isNotEmpty prepend="," property="mappic">
+			mappic=#mappic#
+ 		</isNotEmpty>
+		where id=$id$
+	  </update>
+	<!-- 查询地方 -->
+	<select id="select_city" resultClass="cn.cinema.manage.entity.manage.T0904_City">
+		select * from t0904_city 
+	</select>
+	<!-- 发布信息-->
+	<update id="update_usable" parameterClass="java.lang.Integer">
+		update t0100_placeinfo set
+		usable=1
+		where id=$id$
+	</update>
+	<!-- 查询影院ID是否重复 -->
+	<select id="select_cmanage_isExist" parameterClass="java.lang.String" resultClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo">
+		select * from t0100_placeinfo t
+		<dynamic prepend="where">
+			t.placeno = '$placeno$'
+		</dynamic>
+	</select>
+	<!-- 查询影院ID -->
+	<select id="select_placeno_forHall"  resultClass="java.lang.String">
+			select t.placeno  from t0100_placeinfo t
+	</select>
+</sqlMap>

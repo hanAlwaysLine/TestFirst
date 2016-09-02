@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+   "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+<!--同步排期定时器-->
+	<bean id="featurebean" class="cn.cinema.manage.timer.FilmFeatureUtil">
+		<property name="bs" ref="baseService"></property>
+	</bean>
+	
+	<!--起动Bean排期-->
+	<bean id="task"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronReportTrigger" />
+			</list>
+		</property>
+	</bean>
+	<!--同步排期定时器-->
+	<bean id="cronReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+		<property name="jobDetail">
+			<ref bean="scheduledReportJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 * 7 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="scheduledReportJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="featurebean" />
+		</property>
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>
+	
+<!--	同步影厅定时器-->
+	<bean id="hallbean" class="cn.cinema.manage.timer.Halltimer">
+		<property name="bs" ref="baseService"></property>
+	</bean>
+<!--	-->
+<!--	起动Bean影厅-->
+	<bean id="taskHall"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronReportTriggerHall" />
+			</list>
+		</property>
+	</bean>
+<!--	同步影厅定时器-->
+	<bean id="cronReportTriggerHall" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+		<property name="jobDetail">
+			<ref bean="scheduledReportJobDetailHall" />
+		</property>
+		<property name="cronExpression">
+			<value>0 * 7 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="scheduledReportJobDetailHall" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="hallbean" />
+		</property>
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>
+	
+<!--	同步剩余座位定时器-->
+	<bean id="seatbean" class="cn.cinema.manage.timer.FeatureSeatStatetimer">
+		<property name="bs" ref="baseService"></property>
+	</bean>
+	
+<!--	起动Bean影厅-->
+	<bean id="taskSeat"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronReportTriggerSeat" />
+			</list>
+		</property>
+	</bean>
+<!--	同步影厅定时器-->
+	<bean id="cronReportTriggerSeat" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+		<property name="jobDetail">
+			<ref bean="scheduledReportJobDetailSeat" />
+		</property>
+		<property name="cronExpression">
+			<value>0 * 7 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="scheduledReportJobDetailSeat" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="seatbean" />
+		</property>
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>
+	
+	<!-- 定时器 同步排期-->
+	<bean id="getMemTimerTask" class="cn.cinema.manage.timer.JinTaskApp">
+		<property name="baseService" ref="baseService"/>
+	</bean>
+	<bean id="getMemTimertoken" class="cn.cinema.manage.timer.JinTask">
+	</bean>
+	<bean id="scheduledTimerTask1" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="timerTask" ref="getMemTimerTask" />
+		<!-- 定时器间隔时间 -->
+		<property name="period">
+			<value>3600000</value>
+		</property>
+		<!-- 定时器启动延迟时间 -->
+		<property name="delay">
+			<value>10000</value>
+		</property>
+	</bean>
+	<bean id="scheduledTimertoken" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="timerTask" ref="getMemTimertoken" />
+		<!-- 定时器间隔时间 -->
+		<property name="period">
+			<value>300000</value>
+		</property>
+		<!-- 定时器启动延迟时间 -->
+		<property name="delay">
+			<value>0</value>
+		</property>
+	</bean>
+	<bean class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref bean="scheduledTimerTask1" />
+			</list>
+		</property>
+	</bean>
+		<bean class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref bean="scheduledTimertoken" />
+			</list>
+		</property>
+	</bean>
+</beans>

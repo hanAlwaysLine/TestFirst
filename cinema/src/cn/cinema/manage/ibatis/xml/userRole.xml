@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<select id="role_query" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role" resultClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+	select * from T0002_AD_ROLE where id=#id#
+	</select>
+	<!-- 查询角色列表 -->
+	<select id="role_select" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role"
+		resultClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+		select * from T0002_AD_ROLE r
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+			 r.id = #id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="title">
+			 r.title like '%$title$%'
+			 </isNotEmpty>
+		</dynamic>
+		order by id DESC
+	</select>
+
+	<!-- 查询总数 -->
+	<select id="select_role_count" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role"
+		resultClass="java.lang.String">
+		select count(id) from T0002_AD_ROLE
+    </select>
+
+	<!-- 添加角色 -->
+	<insert id="role_insert" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+		<selectKey keyProperty="id">
+			select SEQ_ROLE.NEXTVAL FROM DUAL
+		</selectKey>
+		insert into T0002_AD_ROLE
+		values(
+		#id#,
+		#title#,
+		sysdate,
+		'0'
+		)
+	</insert>
+
+	<!-- 删除角色 -->
+	<delete id="role_delete" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+		delete from T0002_AD_ROLE r
+		where r.id=#id#
+    </delete>
+
+	<!-- 根据id查询角色 -->
+	<select id="role_selectOne" parameterClass="java.lang.String"
+		resultClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+		select * from T0002_AD_ROLE where id=#id#
+    </select>
+
+	<!-- 修改角色 -->
+	<update id="role_update" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+		update t0002_ad_role r
+		set
+		r.title=#title#
+		where r.id=#id#
+    </update>
+
+	<!-- 获取所有父目录-->
+	<select id="select_f_menu" resultClass="cn.cinema.manage.entity.sys.T0003_Ad_Competence">
+		select * from t0003_ad_competence where father is null
+   </select>
+	<!-- 查询当前子目录 -->
+	<select id="select_s_menu" resultClass="cn.cinema.manage.entity.sys.T0003_Ad_Competence"
+		parameterClass="cn.cinema.manage.entity.sys.T0003_Ad_Competence">
+		select * from t0003_ad_competence where father = #id#
+   </select>
+   <!-- 删除授权 -->
+   <delete id="qxian_delete" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role" >
+   delete from t0005_ad_comprole t
+   where
+   t.role_id=#id#
+   </delete>
+   <!-- 添加授权 -->
+	<insert id="quan_insert" parameterClass="cn.cinema.manage.entity.sys.T0005_Ad_Comprole">
+		insert into t0005_ad_comprole
+		values(
+		Ad_Comprole.NEXTVAL,
+		#competence_id#,
+		#role_id#,
+		sysdate,
+		'0'
+		)
+	</insert>
+	
+<!-- 查询权限添加回显 -->
+	<select id="select_qxian" parameterClass="cn.cinema.manage.entity.sys.T0002_Ad_Role" resultClass="cn.cinema.manage.entity.sys.T0005_Ad_Comprole">
+  select * from t0005_ad_comprole p
+  where
+  p.role_id=#id#
+	</select>
+	
+<!-- 查询角色名是否存在 -->
+<select id="select_role_loginname"  resultClass="cn.cinema.manage.entity.sys.T1003_Role" parameterClass="cn.cinema.manage.entity.sys.T1003_Role">
+select * from T1003_Role r where r.rolename=#rolename#
+</select>
+</sqlMap>

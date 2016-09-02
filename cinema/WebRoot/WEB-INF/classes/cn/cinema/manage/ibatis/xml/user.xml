@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+<!-- 查询用户列表 -->
+<select id="user.selAll" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User" resultClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+		select * from T0001_AD_USER t left join (select p.title,s.user_id from T0004_AD_USERROLE s left join t0002_ad_role p on p.ID=s.role_id ) ps
+on t.id=ps.user_id 
+		 <dynamic prepend="where">
+		 <isNotEmpty prepend="and" property="name">
+			 t.name like '%$name$%'
+		</isNotEmpty>
+		 </dynamic>
+		 order by id DESC
+</select>
+
+ <!-- 查询总数 -->
+	  <select id="select_user_count" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User" resultClass="java.lang.String">
+	  	 select count(ID) from T0001_AD_USER t
+	  	  <dynamic prepend="where">
+			 <isNotEmpty prepend="and" property="name">
+			 t.name like '%$name$%'
+			 </isNotEmpty>
+		 </dynamic>
+	  </select>
+<!-- 添加用户 -->
+<insert id="user.insert" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+<selectKey keyProperty="id">
+select SEQ_USERS.NEXTVAL FROM DUAL
+</selectKey>
+insert into t0001_ad_user t
+values(
+#id#,
+#name#,
+#password#,
+#email#,
+#code#,
+#state#,
+sysdate,
+sysdate,
+'0'
+)
+</insert>
+<!-- 删除用户 -->
+<delete id="user.delete" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+delete from t0001_ad_user t
+where t.id=#id#
+</delete>
+<!-- 修改用户 -->
+<update id="user.update" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+update t0001_ad_user t
+set
+t.NAME=#name#,
+<isNotEmpty property="password">
+t.password=#password#,
+</isNotEmpty>
+t.email=#email#,
+t.state=#state#
+where t.id=#id#
+</update>
+<!-- 修改用户权限 -->
+<update id="userrole.update">
+update T1005_Userrole t
+set
+t.roleid=#roleid#
+where t.userid=#userid#
+</update>
+
+<!-- 根据id查询用户 -->
+<select id="user.selectOne" parameterClass="java.lang.String" resultClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+select * from T0001_AD_USER t left join t0004_ad_userrole s on t.id=s.user_id where t.id=#id#
+</select>
+
+<!-- 查询角色列表 -->
+<select id="role.select" resultClass="cn.cinema.manage.entity.sys.T0002_Ad_Role">
+select * from T0002_AD_ROLE
+</select>
+
+<!-- 添加权限 -->
+
+<insert id="userrole.insert" parameterClass="cn.cinema.manage.entity.sys.T1005_Userrole" >
+insert into T1005_USERROLE
+values(
+#userid#,
+#roleid#
+)
+</insert>
+<!-- 添加角色-->
+<insert id="jus.insert" parameterClass="cn.cinema.manage.entity.sys.T0004_Ad_Userrole" >
+<selectKey keyProperty="id">
+select userrole.NEXTVAL FROM DUAL
+</selectKey>
+insert into t0004_ad_userrole
+values(
+#id#,
+#user_id#,
+#role_id#,
+sysdate,
+'0'
+)
+	</insert>
+<!-- 查询登录用户名是否存在 -->
+<select id="select_user_loginname"  resultClass="cn.cinema.manage.entity.sys.T0001_Ad_User" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+select * from T0001_AD_USER t where t.name=#name# 
+<dynamic prepend="and"  >
+     <isNotNull property="id">
+          t.id!=#id#     
+     </isNotNull>
+</dynamic>
+</select>
+<!-- 查询权限添加回显 -->
+<select id="select_jse" parameterClass="cn.cinema.manage.entity.sys.T1005_Userrole" resultClass="cn.cinema.manage.entity.sys.T1005_Userrole">
+select * from t1005_userrole t
+where
+t.userid=#userid#
+</select>
+<!-- 删除用户角色 -->
+<delete id="jse.delete" parameterClass="cn.cinema.manage.entity.sys.T0001_Ad_User">
+delete from t0004_ad_userrole t
+where 
+t.user_id=#id#
+</delete>
+<select id="juese.select" parameterClass="cn.cinema.manage.entity.sys.T1000_Users" resultClass="cn.cinema.manage.entity.sys.T1003_Role">
+select r.rolename from T1003_ROLE r
+where
+r.roleid in (select roleid from t1005_userrole t where t.userid=#userid#)
+</select>
+</sqlMap>

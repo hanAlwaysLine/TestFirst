@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<package name="cinemamanage-default" extends="json-default"></package>
+
+	<package name="login" extends="cinemamanage-default">
+		<action name="login" class="cn.cinema.manage.action.sys.Login">
+			<result name="showuserpassword">
+				/changePassword.jsp
+	        </result>
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+
+	<!-- 用户管理 -->
+	<package name="user" extends="cinemamanage-default">
+		<action name="user" class="cn.cinema.manage.action.sys.User">
+			<result name="success">
+				/user/userResult.jsp
+	        </result>
+			<result name="goAdd">
+				/user/userAdd.jsp
+	        </result>
+			<result name="add">
+				/user/result.jsp
+	        </result>
+			<result name="delete" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+			</result>
+			<result name="goUpdate">
+				/user/userUpdate.jsp
+	        </result>
+			<result name="toDetailsUser">
+				/user/detailsUser.jsp
+	        </result>
+			<result name="update">
+				/user/result.jsp
+	        </result>
+		</action>
+	</package>
+
+	<!-- 角色管理 -->
+	<package name="role" extends="cinemamanage-default">
+		<action name="role" class="cn.cinema.manage.action.sys.Role">
+			<result name="success">
+				/role/roleResult.jsp
+			</result>
+			<result name="goAdd">
+				/role/addRole.jsp
+			</result>
+			<result name="toDetailsRole">
+				/role/detailsRole.jsp
+			</result>
+			<result name="add">
+				/role/addRole.jsp
+			</result>
+			<result name="delete" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+			</result>
+			<result name="goUpdate">
+				/role/updateRole.jsp
+			</result>
+			<result name="update">
+				/role/updateRole.jsp
+			</result>
+			<result name="goSq">
+				/role/squan.jsp
+	        </result>
+			<result name="sqAdd">
+				/role/squan.jsp
+	        </result>
+			<result name="gomain">
+				/role/roleQuery.jsp
+	        </result>
+		</action>
+	</package>
+	<!-- 影院管理 -->
+	<package name="manage" extends="cinemamanage-default">
+		<action name="cmanage" class="cn.cinema.manage.action.cmanage.Cmanage">
+			<result name="queryCmanage">/cmanage/cmanageQuery.jsp</result>
+			<result name="queryCmanageResult">/cmanage/cmanageResult.jsp</result>
+			
+			<result name="saveCmanage">/cmanage/cmanageAdd.jsp</result>
+			<result name="delCmanage" type="json">
+				<param name="includeProperties">flag</param>
+			</result>
+			<result name="updateUsable" type="json">
+				<param name="includeProperties">uFlag</param>
+			</result>
+			<result name="isExist" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="goDetailedinformation">/cmanage/cmanageEdit.jsp</result>
+			<result name="updateDetailedinformation">/cmanage/cmanageEdit.jsp</result>
+			<result name="updateDetailedinformation1">/cmanage/cmanageEdit1.jsp</result>
+			<result name="goedit">/cmanage/cmanageEdit1.jsp</result>
+		</action>
+	</package>
+	<!-- 影片管理 -->
+	<package name="filmmanage" extends="cinemamanage-default">
+		<action name="filmmanage" class="cn.cinema.manage.action.filmmanage.Filmmanage">
+			<result name="queryfilmmanage">/filmmanage/filmmanageResult.jsp</result>
+			<result name="delfilm" type="json">
+				<param name="includeProperties">flag</param>
+			</result>
+			<result name="editfilm">/filmmanage/filmmanageEdit.jsp</result>
+			<result name="savefilm">/filmmanage/filmmanageAdd.jsp</result>
+			<result name="requery">/filmmanage/filmmanageQuery.jsp</result>
+			<result name="updatefilm">/filmmanage/filmmanageEdit.jsp</result>
+			<result name="details">/filmmanage/filmmanageDetails.jsp</result>
+			
+			<result name="fimewarn">/filmmanage/fimewarnmanageResult.jsp</result>
+			<result name="savefimewarn">/filmmanage/fimewarnmanageAdd.jsp</result>
+			<result name="goEditfimewarn">/filmmanage/fimewarnmanageUpdate.jsp</result>
+			<result name="editfimewarn">/filmmanage/fimewarnmanageResult.jsp</result>
+			<result name="delfimewarn" type="json">
+				<param name="includeProperties">film_d</param>
+			</result>	
+			
+			<result name="fimestill">/filmmanage/filmmanageStillsResult.jsp</result>
+			<result name="savefimestill">/filmmanage/filmmanageStillsAdd.jsp</result>
+			<result name="goUpdatefimestills">/filmmanage/filmmanageStillsUpdate.jsp</result>
+			<result name="updatefimestills">/filmmanage/filmmanageStillsUpdate.jsp</result>
+			<result name="delfimestills" type="json">
+				<param name="includeProperties">film_d</param>
+			</result>
+			
+			<result name="rePosition">/filmmanage/filmmanagePosition.jsp</result>
+			<result name="gorelease" type="json"><param name="includeProperties">film_d</param></result>
+		</action>
+		<!-- 电影分类管理 -->
+		<action name="filmtypemanage" class="cn.cinema.manage.action.filmmanage.Filmtypemanage">
+			<result name="queryfilmtypemanage">/filmmanage/filmtypemanageResult.jsp</result>
+			<result name="savefilmtype">/filmmanage/filmtypemanageAdd.jsp
+			</result>
+			<result name="delfilmtype" type="json">
+				<param name="includeProperties">flag</param>
+			</result>
+			<result name="editfilmtype">/filmmanage/filmtypemanageEdit.jsp</result>
+			<result name="updatefilmtype">/filmmanage/filmtypemanageEdit.jsp</result>
+		</action>
+		
+	</package>
+
+	
+	<!-- 排期管理 by：tangfx-->
+	<package name="featuremanage" extends="cinemamanage-default">
+		<action name="featuremanage" class="cn.cinema.manage.action.featuremanage.Featuremanage">
+			<result name="query">/featuremanage/featuremanageQuery.jsp</result>
+			<result name="queryfeature">/featuremanage/featuremanageResult.jsp</result>
+			<result name="waiting">/featuremanage/waitingTip.jsp</result>
+			<result name="update" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="querycount" type="json">
+				<param name="includeProperties">
+					exitsorder
+	        </param>
+			</result>
+		</action>
+	</package>
+	
+	<!-- 订单管理 -->
+	<package name="orderformanage" extends="cinemamanage-default">
+		<!-- 订单管理 -->
+		<action name="orderform" class="cn.cinema.manage.action.orderform.Orderform">
+			<result name="queryOrderformResult">/orderform/orderformResult.jsp</result>
+			<result name="userOrderDetail">/orderform/orderformDetail.jsp</result>
+			<!-- 订单影票 卖品 统计  -->
+			<result name="orderfilmgoodsResult">/orderfilmgoods/orderfilmgoodsResult.jsp</result>
+		</action>
+		
+		<!-- 订单查询 -->
+		<action name="orderselect" class="cn.cinema.manage.action.orderform.OrderSelect">
+			<result name="queryOrderformResult">/orderselect/orderformResult.jsp</result>
+			<result name="userOrderDetail">/orderselect/orderformDetail.jsp</result>
+			<result name="json" type="json"></result>
+		</action>
+		
+		
+	</package>
+	
+	<!-- 活动管理 -->
+	<package name="activitymanage" extends="cinemamanage-default">
+		<action name="activity" class="cn.cinema.manage.action.activitymanage.Activitymanage">
+		    <result name="query">/activitymanage/activityQuery.jsp</result>
+		    <result name="addactivity">/activitymanage/activityAdd.jsp</result>
+			<result name="queryactivity">/activitymanage/activityResult.jsp</result>
+			<result name="saveactivity">/activitymanage/activityAdd.jsp</result>
+	        <result name="delete" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        	</param>
+	        </result>
+	        <result name="release" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="json" type="json"></result>
+	        <result name="goedit">/activitymanage/activityEdit.jsp</result>
+	        <result name="update">/activitymanage/activityEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 广告管理 -->
+	<package name="advertisemanage" extends="cinemamanage-default">
+		<action name="advertise" class="cn.cinema.manage.action.advertisemanage.Advertisemanage">
+		    <result name="query">/advertisemanage/advertiseQuery.jsp</result>
+			<result name="querycarouse">/advertisemanage/carouselchartResult.jsp</result>
+			<result name="queryadchart">/advertisemanage/adchartResult.jsp</result>
+			<result name="queryactchart">/advertisemanage/actchartResult.jsp</result>
+			<result name="addcarouse">/advertisemanage/carouselchartAdd.jsp</result>
+			<result name="addadchart">/advertisemanage/adchartAdd.jsp</result>
+			<result name="addactchart">/advertisemanage/actchartAdd.jsp</result>
+			<result name="savecarouse">/advertisemanage/carouselchartAdd.jsp</result>
+			<result name="saveadchart">/advertisemanage/adchartAdd.jsp</result>
+			<result name="saveactchart">/advertisemanage/actchartAdd.jsp</result>
+			<result name="editcarouse">/advertisemanage/carouselchartEdit.jsp</result>
+			<result name="editadchart">/advertisemanage/adchartEdit.jsp</result>
+			<result name="editactchart">/advertisemanage/actchartEdit.jsp</result>
+			<result name="adposition">/advertisemanage/adchartPosition.jsp</result>
+			<result name="actposition">/advertisemanage/actchartPosition.jsp</result>
+			<result name="delete" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+			<result name="editwarn">/advertisemanage/editwarn.jsp</result>
+			<result name="editactwarn">/advertisemanage/editactwarn.jsp</result>
+			<result name="editactimg">/advertisemanage/editactimg.jsp</result>
+		</action>
+		
+		<!-- 广告管理 -->
+		<action name="picture" class="cn.cinema.manage.action.advertisemanage.PictureAction">
+			<result name="findPicList">/picture/pictureResult.jsp</result>
+			<result name="addPic">/picture/pictureAdd.jsp</result>
+			<result name="findInfoById">/picture/pictureEdit.jsp</result>
+			<result name="editPic">/picture/pictureEdit.jsp</result>
+			<result name="json" type="json"></result>
+		</action>
+		
+		<!-- 上传页面 -->
+		<action name="uploadhtml" class="cn.cinema.manage.action.advertisemanage.UploadHtmlAction">
+			<result name="findHtmlList">/uploadhtml/uploadHtmlResult.jsp</result>
+			<result name="addHtml">/uploadhtml/uploadHtmlAdd.jsp</result>
+			<result name="findInfoById">/uploadhtml/uploadHtmlEdit.jsp</result>
+			<result name="editHtml">/uploadhtml/uploadHtmlEdit.jsp</result>
+			<result name="json" type="json"></result>
+		</action>
+	</package>
+	
+	<!-- 异常 -->
+	<package name="errormanage" extends="cinemamanage-default">
+		<action name="errormanage" class="cn.cinema.manage.action.errormanage.Errormanage">
+			<result name="queryerrorlog">/errorlog/errorlogResult.jsp</result>
+		</action>
+	</package>
+	<constant name="struts.multipart.maxSize" value="100000000"/>
+	
+	
+	<!-- 影厅管理 -->
+	<package name="hallmanage" extends="cinemamanage-default">
+		<action name="hall" class="cn.cinema.manage.action.hall.HallAction">
+		    <result name="query">/hall/hallQuery.jsp</result>
+		    <result name="addhall">/hall/hallAdd.jsp</result>
+			<result name="queryhall">/hall/hallResult.jsp</result>
+			<result name="saveactivity">/activitymanage/activityAdd.jsp</result>
+	        <result name="delete" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="release" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="goedit">/hall/hallEdit.jsp</result>
+	        <result name="update">/hall/hallEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 卖品管理 -->
+	<package name="goodsmanage" extends="cinemamanage-default">
+		<action name="goods" class="cn.cinema.manage.action.goods.GoodsAction">
+		    <result name="query">/goods/goodsQuery.jsp</result>
+		    <result name="addgoods">/goods/goodsAdd.jsp</result>
+			<result name="queryhall">/goods/goodsResult.jsp</result>
+			<result name="saveactivity">/activitymanage/activityAdd.jsp</result>
+	        <result name="delete" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="release" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="goedit">/goods/goodsEdit.jsp</result>
+	        <result name="update">/goods/goodsEdit.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 招聘管理 -->
+	<package name="jobmanage" extends="cinemamanage-default">
+		<action name="job" class="cn.cinema.manage.action.goods.JobAction">
+		    <result name="query">/job/jobQuery.jsp</result>
+		    <result name="addjob">/job/jobAdd.jsp</result>
+			<result name="queryjob">/job/jobResult.jsp</result>
+			<result name="saveactivity">/activitymanage/activityAdd.jsp</result>
+	        <result name="delete" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="release" type="json">
+				<param name="includeProperties">
+					modifySuc
+	        </param>
+	        </result>
+	        <result name="goedit">/job/jobEdit.jsp</result>
+	        <result name="update">/job/jobEdit.jsp</result>
+		</action>
+	</package>
+	<package name="weixinmanage" extends="cinemamanage-default">
+		<action name="weixin" class="cn.cinema.manage.action.weixin.Weixin">
+		</action>
+	</package>
+	<!-- 接口配置 -->
+	<package name="ifacemanage" extends="cinemamanage-default">
+		<action name="service" class="cn.cinema.manage.iface.ClientAction">
+		</action>
+	</package>
+	
+	<!-- 报表管理 -->
+	<package name="reportform" extends="cinemamanage-default">
+		<!-- 客户端数量统计报表-->
+		<action name="clientnum" class="cn.cinema.manage.action.reportform.ClientNumberAction">
+			<result name="json" type="json"></result>
+		</action>
+		
+		<!-- 订单统计报表-->
+		<action name="orderstatis" class="cn.cinema.manage.action.reportform.OrderStatisticsAction">
+			<result name="json" type="json"></result>
+		</action>
+		
+		<!-- 会员数量统计报表-->
+		<action name="membernum" class="cn.cinema.manage.action.reportform.MemberNumberAction">
+			<result name="json" type="json"></result>
+		</action>
+		
+		<!-- 对账报表-->
+		<action name="reconciliation" class="cn.cinema.manage.action.reportform.ReconciliAction">
+			<result name="findOrderInfo">/reportform/reconciliation/reconciliationResult.jsp</result>
+		</action>
+	</package>
+	
+	
+</struts>    

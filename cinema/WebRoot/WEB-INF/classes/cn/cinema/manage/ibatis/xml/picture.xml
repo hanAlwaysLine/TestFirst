@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<!-- 查询图片信息 -->
+	<select id="select_picture_info" parameterClass="cn.cinema.manage.entity.advertisemanage.T0406Picture"
+		resultClass="cn.cinema.manage.entity.advertisemanage.T0406Picture">
+		select id, picturename, pictureurl, url, type, htmltext, state, memo,sort from t0406_picture
+		where 1=1
+		<isNotEmpty prepend="and" property="picturename">
+			picturename like
+			'%'||#picturename#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="type">
+			type = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="state">
+			state = #state#
+		</isNotEmpty>
+		order by type,sort
+	</select>
+
+	<!-- 查询图片总数 -->
+	<select id="select_picture_infocount" parameterClass="cn.cinema.manage.entity.advertisemanage.T0406Picture"
+		resultClass="java.lang.String">
+		select count(id) from t0406_picture
+     </select>
+
+	<!-- 根据ID查询图片信息 -->
+	<select id="select_picture_infoById" parameterClass="cn.cinema.manage.entity.advertisemanage.T0406Picture"
+		resultClass="cn.cinema.manage.entity.advertisemanage.T0406Picture">
+		select id, picturename, pictureurl, url, type, htmltext, state, memo, sort from
+		t0406_picture where id=#id#
+	 </select>
+
+	<!-- 根据name查询图片信息 -->
+	<select id="select_picture_infoByName" parameterClass="cn.cinema.manage.entity.advertisemanage.T0406Picture"
+		resultClass="cn.cinema.manage.entity.advertisemanage.T0406Picture">
+		select id from
+		t0406_picture where picturename=#picturename#
+	 </select>
+
+	<!-- 添加图片信息-->
+	<insert id="insert_picture_info" parameterClass="cn.cinema.manage.entity.advertisemanage.T0406Picture">
+		insert into t0406_picture (id, picturename, pictureurl, url, type, htmltext, state, memo, sort)
+		values (t0406_picture_sequence.nextval, #picturename#, #pictureurl#,
+		#url#,#type#,#htmltext#,#state#, #memo#, #sort#)
+     </insert>
+
+	<!-- 修改图片信息-->
+	<update id="update_picture_Info" parameterClass="cn.cinema.manage.entity.advertisemanage.T0406Picture">
+		update t0406_picture
+		set picturename = #picturename#,
+		pictureurl = #pictureurl#,
+		url = #url#,
+		type = #type#, 
+		htmltext = #htmltext#,
+		state = #state#,
+		memo = #memo#,
+		sort = #sort#
+		where id = #id#
+     </update>
+
+	<!-- 删除图片信息-->
+	<delete id="delete_picture_info" parameterClass="cn.cinema.manage.entity.advertisemanage.T0406Picture">
+		delete from t0406_picture t where t.id=#id#
+     </delete>
+</sqlMap>

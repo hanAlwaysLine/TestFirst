@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+   <sqlMap namespace="service">
+	 
+	 <!-- 影片排期 -->
+	 <select id="client_query_film_feature" parameterClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP" resultClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+	    SELECT * FROM T0201_FEATURE_APP 
+	    <dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="filmno">
+				FILMNO = #filmno# 
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="placeno">
+				PLACENO = #placeno# 
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="featuredate">
+				FEATUREDATE = #featuredate# 
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="featureno">
+				FEATURENO = #featureno# 
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="featureappno">
+				FEATUREAPPNO = #featureappno# 
+	 		</isNotEmpty>
+	 		ORDER BY TOPCOUNT 
+		</dynamic>
+	 </select>
+	 
+	 <!-- 影片详细信息 -->
+	 <select id="client_query_film_info" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+	    SELECT * FROM T0111_FILMMESSAGE WHERE FILMNO = #filmno#
+	 </select>
+	 
+	 <!-- 获取版本信息 -->
+	 <select id="client_query_version" parameterClass="cn.cinema.manage.entity.sys.T0907_Version" resultClass="cn.cinema.manage.entity.sys.T0907_Version">
+	    SELECT * FROM T0907_VERSION WHERE VERSION_TYPE = #version_type#
+	 </select>
+	 
+	 <!-- 影片列表 -->
+	 <select id="client_query_film_list" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+	    SELECT * FROM T0111_FILMMESSAGE 
+	    <dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="release">
+				RELEASE = #release#
+	 		</isNotEmpty>
+		</dynamic>
+	 </select>
+	 
+	 <!-- 影片列表数量，用于分页 -->
+	 <select id="client_query_film_list_count" parameterClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE" resultClass="cn.cinema.manage.entity.filmmanage.T0111_FILMMESSAGE">
+	    SELECT COUNT(*) FROM T0111_FILMMESSAGE 
+	    <dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="release">
+				RELEASE = #release#
+	 		</isNotEmpty>
+		</dynamic>
+	 </select>
+	 
+	 <!-- 查询订单表的序列值 -->
+	 <select id="client_query_order_seq" resultClass="java.lang.Integer">
+	 	SELECT TRIM(TO_CHAR(T0300_ORDERFORM_SEQUENCE.NEXTVAL,'00000000')) FROM DUAL
+	 </select>
+	 
+	 <!-- 生成订单 -->
+	 <insert id="client_insert_userorder" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder">
+	 	INSERT INTO T0300_USERORDER(
+		 	ORDER_NO,
+			USER_ID,
+			ORDER_TIME,
+			ORDER_PRICE,
+			ORDER_TYPE,
+			PAY_TYPE,
+			APPCODE
+	 	) VALUES (
+		 	#order_no#,
+			#user_id#,
+			#order_time#,
+			#order_price#,
+			#order_type#,
+			#pay_type#,
+			#appcode#
+	 	)
+	 </insert>
+	 <insert id="client_insert_orderform" parameterClass="cn.cinema.manage.entity.ticket.T0300_Orderform">
+	 	INSERT INTO T0300_ORDERFORM (
+			fid,
+			featureappno, 
+			orderno  , 
+			placeid  , 
+			ticketsnum,
+			seatinfo,
+			filmno,
+			hallno,
+			sectionid,
+			showseqno,
+			showdate,
+			showtime,
+			message,
+			result_lock,
+			seats_pay,
+			result_pay,
+			state,
+			price,
+			countprice,
+			pay_type,
+			center_no
+	 	) VALUES (
+	 		#fid#,
+			#featureappno#, 
+			#orderno#, 
+			#placeid#, 
+			#ticketsnum#,
+			#seatinfo#,
+			#filmno#,
+			#hallno#,
+			#sectionid#,
+			#showseqno#,
+			#showdate#,
+			#showtime#,
+			#message#,
+			#result_lock#,
+			#seats_pay#,
+			#result_pay#,
+			#state#,
+			#price#,
+			#countprice#,
+			#pay_type#,
+			#center_no#
+	 	)
+	 </insert>
+	 
+	 <!-- 查询订单信息 -->
+	 <select id="clilent_query_userorder" parameterClass="cn.cinema.manage.entity.ticket.T0300_UserOrder" resultClass="cn.cinema.manage.entity.ticket.T0300_UserOrder">
+	 	SELECT * FROM T0300_USERORDER  
+	 	<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="order_no">
+				ORDER_NO = #order_no# 
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="user_id">
+				USER_ID = #user_id# 
+	 		</isNotEmpty>
+		</dynamic>
+	 </select>
+	  <select id="clilent_query_orderfrom" parameterClass="cn.cinema.manage.entity.ticket.T0300_Orderform" resultClass="cn.cinema.manage.entity.ticket.T0300_Orderform">
+	 	SELECT * FROM T0300_ORDERFORM 
+	 	<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="orderno">
+				ORDERNO = #orderno#
+	 		</isNotEmpty>
+		</dynamic>
+	 </select>
+	 
+	 <!-- 查询用户是否可以注册 -->
+	 <select id="client_query_user" parameterClass="cn.cinema.manage.entity.sys.T1000_Users" resultClass="cn.cinema.manage.entity.sys.T1000_Users">
+	 	SELECT * FROM T1000_USER T 
+	 	<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="user_mobile">
+				T.USER_MOBILE=#user_mobile#
+	 		</isNotEmpty>
+	 		<isNotEmpty prepend="and" property="user_pass">
+				T.USER_PASS=#user_pass#
+	 		</isNotEmpty>
+		</dynamic>
+	 </select>
+	 
+	 <!-- 会员注册 -->
+	 <insert id="client_insert_user" parameterClass="cn.cinema.manage.entity.sys.T1000_Users">
+	 	INSERT INTO T1000_USER (USER_ID,USER_NAME,USER_MOBILE,USER_PASS,USER_TIME,USER_APP) VALUES 
+	 	(SEQ_USERS.NEXTVAL,#user_name#,#user_mobile#,#user_pass#,sysdate,#user_app#)
+	 </insert>
+
+   </sqlMap>

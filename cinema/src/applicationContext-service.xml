@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	xmlns:p="http://www.springframework.org/schema/p">
+	
+	<bean id="environmentVariablesConfiguration"
+		class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+		<property name="algorithm" value="PBEWithMD5AndDES" />
+		<property name="password" value="password" />
+	</bean>
+
+	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="environmentVariablesConfiguration" />
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.jasypt.spring.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="configurationEncryptor" />
+		<property name="locations">
+			<list>
+				<value>classpath:init.properties</value>
+
+			</list>
+		</property>
+		<property name="fileEncoding" value="utf-8" />
+	</bean>
+
+
+	<!-- 数据写入数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>${datasource.driverClassName}</value>
+		</property>
+		<property name="url">
+		<value>${datasource.url}</value>
+		</property>
+		<property name="username">
+		<value>${datasource.username}</value>
+		</property>
+		<property name="password">
+		<value>${datasource.password}</value>
+		</property>
+	</bean>
+	<!-- 数据写入sessiobFactory-->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+	<property name="configLocation">
+		 <value>
+		 classpath:SqlMapConfig.xml
+		 </value>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 事物代理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 设置异常回滚类别 -->
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+		<ref local="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="baseDAO" class="cn.cinema.manage.dao.impl.BaseDaoImpl">
+	<property name="sqlMapClient">
+			<ref local="sqlMapClient" />
+		</property>
+	</bean>
+	<bean id="baseService" class="cn.cinema.manage.spring.service.BaseServiceImpl">
+	<property name="dao" ref="baseDAO"/>
+	</bean>
+	<bean id="clientService" class="cn.cinema.manage.spring.service.ClientServiceImpl">
+	<property name="dao" ref="baseDAO"/>
+	</bean>
+	<!-- 读取properties信息 -->
+	<bean id="messages" class="cn.cinema.manage.util.Messages"/>
+	
+	<bean id="cinemaService" class="cn.cinema.manage.iface.impl.ClientServiceImpl"  scope="prototype"></bean>
+	<bean id="featureService" class="cn.cinema.manage.service.impl.FeatureServiceImp"  scope="prototype"></bean>
+	
+	<bean id="cinemaAction" class="cn.cinema.manage.iface.ClientAction" scope="prototype">
+		<property name="cinemaService" ref="cinemaService"></property>
+	</bean>
+	
+</beans>

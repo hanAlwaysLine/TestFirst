@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+   <sqlMap>
+	 
+	 <select id="selectFeatureState" resultClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+	 	 <![CDATA[select * from t0201_feature_app t where t.featuredate >= #dateStr# order by t.featuredate]]>
+	 </select>
+	 
+	 <update id="updateFeatureSeats" parameterClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+	 	<![CDATA[update t0201_feature_app
+		   set totalseats = #totalseats#,
+		       remainingseats = #remainingseats#
+		 where featureappno = #featureappno#]]>
+	 </update>
+   </sqlMap>

@@ -1,0 +1,97 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ background:url(../imgs/login_bg.jpg) repeat;); margin:0px; padding:0px; font-family:微软雅黑,宋体; font-size:12px;}
+#container{}
+#wrapper{ width:1024px; margin:0 auto; overflow:hidden;}
+#logo div{ cursor:pointer;}
+
+#slider .system,#slider .money,#slider .ticket,#slider .sale,#slider .member,#slider .data,#slider .gift{ height:554px; width:138px; display:block; float:left; text-align:center; overflow:hidden;}
+#slider span{height:287px; width:25px; display:block; float:left; margin-top:267px;}
+#slider .system{ background:url(../Images/Slider_System.png) no-repeat;}
+#slider .money{ background:url(../Images/Slider_Money.png) no-repeat;}
+#slider .ticket{ background:url(../Images/Slider_Ticket.png) no-repeat;}
+#slider .sale{ background:url(../Images/Slider_Sale.png) no-repeat;}
+#slider .member{ background:url(../Images/Slider_Member.png) no-repeat;}
+#slider .data{ background:url(../Images/Slider_Data.png) no-repeat;}
+#slider .gift{ background:url(../Images/Slider_Gift.png) no-repeat;}
+#slider span.left{ text-align:left;}
+#slider span.right{ text-align:right;}
+#slider .menu{ margin-top:239px; text-align:center; color:#fff; font-size:14px;}
+#slider .menulist{margin-top:10px; display:none; line-height:24px; background:url(../Images/SplitLine.png) top center no-repeat; padding-top:30px;}
+#slider .menulist a{ display:block; color:#fff; text-decoration:none;}
+#slider .menulist a:hover{color:#000;}
+#footer{ text-align:center; color:#fff; margin-top:5px; padding:5px;}
+#loginform{width:333px; height:287px;background:url(../Images/LoginBg.png) no-repeat; overflow:hidden; margin:0 auto;}
+#loginform .userid{margin-top:72px; margin-left:105px;width:170px; height:25px; display:block; border:none; background:#d3d3d3; font-size:14px; color:#333;}
+#loginform .password{margin-top:30px; margin-left:105px;width:170px; height:25px; display:block; border:none; background:#d3d3d3; font-size:14px; color:#333;}
+#loginform .btn{ margin-top:40px; padding-left:33px;}
+#loginform .btn input{width:119px; height:45px; border:none; cursor:pointer;}
+#loginform .btn .login{ background:url(../Images/btnLogin.png) no-repeat;}
+#loginform .btn .cannel{ background:url(../Images/btnCannel.png) no-repeat;}
+
+#leftmenu {width:151px; height:661px; float:left;}
+#leftmenu a{font-family:微软雅黑,宋体;font-size:14px;font-weight:bold;display:block; color:#406517; height:30px;text-align:right;padding-right:38px;line-height:30px;}
+#leftmenu .menu{ margin-right:10px;}
+#leftmenu .title{ height:37px; width:131px; margin:0px 10px 10px 10px; cursor:pointer;}
+/*#leftmenu .selectitem .category{ font-weight:bold; background:url(../Images/Arrow.gif) no-repeat; padding-left:20px; }
+#leftmenu .selectitem .categoryexpand{ font-weight:bold; background:url(../Images/Arrow2.gif) no-repeat; padding-left:20px; }*/
+#leftmenu .select{ background-color:#89BE3A; background-repeat:no-repeat; background-position:100px; color:#fff; font-size:14px;}
+#leftmenu .selectitem{display:none;}
+#leftmenu .selectitem a{padding-right:38px; font-size:12px;color:#7D9E4F;text-align:right;}
+#leftmenu .selectitem a:hover{background:url(../imgs/hover_jiao.jpg) 108px 6px no-repeat;}
+#leftmenu .categorylist{display:none;}
+/*system*/
+#leftmenu .system{background:url(../Images/Menu_System.png) no-repeat;width:151px; height:661px; text-align:center; padding-top:10px; }
+#leftmenu .system .title{ background:url(../Images/Title_System.png) no-repeat;}
+#leftmenu .system .selectitem{ background:#085e88; }
+#leftmenu .system a:hover{ background-color:#0a6998; }
+/*data*/
+#leftmenu .data{background-color:#DBE9C5;width:151px; height:661px; text-align:center; padding-top:10px;  }
+#leftmenu .data .title{ background:url(../Images/Title_Data.png) no-repeat; }
+#leftmenu .data a:hover{ background-color:#89BE3A;color:#fff;}
+#leftmenu .selectitem a:hover{background-color:#DBE9C5;color:#7D9E4F;}
+/*gift*/
+#leftmenu .gift{background:url(../Images/Menu_Gift.png) no-repeat;width:151px; height:661px; text-align:center; padding-top:10px;  }
+#leftmenu .gift .title{ background:url(../Images/Title_Gift.png) no-repeat; }
+#leftmenu .gift .selectitem{ background:#067171;}
+#leftmenu .gift a:hover{ background-color:#098585;}
+/*member*/
+#leftmenu .member{background:url(../Images/Menu_Member.png) no-repeat;width:151px; height:661px; text-align:center; padding-top:10px;  }
+#leftmenu .member .title{ background:url(../Images/Title_Member.png) no-repeat; }
+#leftmenu .member .selectitem{ background:#9f9129;}
+#leftmenu .member a:hover{ background-color:#b4a42f;}
+/*money*/
+#leftmenu .money{background:url(../Images/Menu_Money.png) no-repeat;width:151px; height:661px; text-align:center; padding-top:10px;  }
+#leftmenu .money .title{ background:url(../Images/Title_Money.png) no-repeat; }
+#leftmenu .money .selectitem{ background:#3b7393;}
+#leftmenu .money a:hover{ background-color:#4282a7;}
+/*sale*/
+#leftmenu .sale{background:url(../Images/Menu_Sale.png) no-repeat;width:151px; height:661px; text-align:center; padding-top:10px;  }
+#leftmenu .sale .title{ background:url(../Images/Title_Sale.png) no-repeat; }
+#leftmenu .sale .selectitem{ background:#6c6d62;}
+#leftmenu .sale a:hover{ background-color:#818275;}
+/*ticket*/
+#leftmenu .ticket{background:url(../Images/Menu_Ticket.png) no-repeat;width:151px; height:661px; text-align:center; padding-top:10px;  }
+#leftmenu .ticket .title{ background:url(../Images/Title_Ticket.png) no-repeat; }
+#leftmenu .ticket .selectitem{ background:#627683;}
+#leftmenu .ticket a:hover{ background-color:#708695;}
+
+#mainframe{ float:right; width:861px;}
+#mainframe .hmenu{width:861px; height:30px; overflow:hidden;}
+#mainframe .hmenu a{height:30px; width:123px;color:#fff; overflow:hidden; text-decoration:none; line-height:30px; display:block; float:left; text-align:center;}
+#mainframe .hmenu .system{ background:#006496;}
+#mainframe .hmenu .money{ background:#4f96c2;}
+#mainframe .hmenu .ticket{ background:#a7c3d6;}
+#mainframe .hmenu .sale{ background:#7f8070;}
+#mainframe .hmenu .member{ background:#cfb103;}
+#mainframe .hmenu .data{ background:#a0a70b;}
+#mainframe .hmenu .gift{ background:#03a9a9;}
+#mainframe .framearea{ background:url(../Images/appBg.png); clear:both; margin-top:10px; height:620px;}
+
+.clear{ clear:both;}
+
+#frameaif{
+	background: url(../Images/appBg.png) repeat;
+	clear: both;
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<!-- 查询参数列表 -->
+	<select id="params_sel1" parameterClass="cn.cinema.manage.entity.manage.T0110_Systemparams" resultClass="cn.cinema.manage.entity.manage.T0110_Systemparams">
+       select * from T0110_Systemparams s where s.parasign=#parasign#
+	</select>
+	<select id="params_sel2" parameterClass="cn.cinema.manage.entity.manage.T0110_Systemparams" resultClass="cn.cinema.manage.entity.manage.T0110_Systemparams">
+	   select * from T0110_Systemparams s where s.parasign != 'V' and s.parasign != 'F' and s.parasign != 'A'
+	</select>
+	<!--  -->
+	<select id="params_sel3" parameterClass="cn.cinema.manage.entity.manage.T0110_Systemparams" resultClass="cn.cinema.manage.entity.manage.T0110_Systemparams">
+	   select * from T0110_Systemparams s where s.parasign = 'A'
+	</select>
+	<!-- 查询数据是否已存在 -->
+	<select id="params_selOne" parameterClass="cn.cinema.manage.entity.manage.T0110_Systemparams" resultClass="cn.cinema.manage.entity.manage.T0110_Systemparams">
+	   select * from T0110_Systemparams s where s.paraname = #paraname# and s.cinemaid = #cinemaid#
+	</select>
+	<!-- 与地面数据同步 -->
+	<insert id="params_insert" parameterClass="cn.cinema.manage.entity.manage.T0110_Systemparams">
+	<selectKey keyProperty="id">
+     select SEQ_ID.NEXTVAL FROM DUAL
+    </selectKey>
+    insert into T0110_Systemparams
+    values(
+    #systemid#,
+    #cinemaid#,
+    #paraname#,
+    #paravalue#,
+    #paramemo#,
+    #parasign#,
+    #parapos#,
+    #id#
+    )
+	</insert>
+	<!-- 更新数据 -->
+	<update id="param_update" parameterClass="cn.cinema.manage.entity.manage.T0110_Systemparams">
+    update T0110_Systemparams s
+    <dynamic prepend="set">
+    <isNotEmpty property="systemid" prepend=",">
+    s.systemid=#systemid#
+    </isNotEmpty>
+    <isNotEmpty property="cinemaid" prepend=",">
+    s.cinemaid=#cinemaid#
+    </isNotEmpty>
+    <isNotEmpty property="paraname" prepend=",">   
+    s.paraname=#paraname#
+    </isNotEmpty>
+    <isNotEmpty property="paravalue" prepend=",">
+    s.paravalue=#paravalue#
+    </isNotEmpty>
+    <isNotEmpty property="paramemo" prepend=",">
+    s.paramemo=#paramemo#
+    </isNotEmpty>
+    <isNotEmpty property="parasign" prepend=",">
+    s.parasign=#parasign#
+    </isNotEmpty>
+    <isNotEmpty property="parapos" prepend=",">
+    s.parapos=#parapos#
+    </isNotEmpty>
+    </dynamic>
+    where
+    s.cinemaid=#cinemaid#
+    and
+    s.paraname=#paraname#
+    </update>
+    <!-- 查询所有 -->
+    <select id="param_All" parameterClass="cn.cinema.manage.entity.manage.T0110_Systemparams" resultClass="cn.cinema.manage.entity.manage.T0110_Systemparams">
+    select * from T0110_Systemparams
+    </select>
+</sqlMap>

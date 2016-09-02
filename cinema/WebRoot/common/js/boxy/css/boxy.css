@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+.boxy-wrapper{position:absolute;}
+.boxy-wrapper.fixed{position:fixed;}
+/* Modal */ 
+.boxy-modal-blackout{position:absolute; background-color:#000000; left:0; top:0;}
+/* Border */
+.boxy-wrapper{empty-cells:show;}
+.boxy-wrapper .top-left,.boxy-wrapper .top-right,.boxy-wrapper .bottom-right,.boxy-wrapper .bottom-left{width:10px; height:10px; padding:0}
+.boxy-wrapper .top-left{background:url(/cinema/common/imgs/zuoshang.png); opacity:0.6; filter:alpha(opacity=60);}
+.boxy-wrapper .top-right{background:url(/cinema/common/imgs/youshang.png); opacity:0.6; filter:alpha(opacity=60);}
+.boxy-wrapper .bottom-right{background:url(/cinema/common/imgs/youxia.png); opacity:0.6; filter:alpha(opacity=60);}
+.boxy-wrapper .bottom-left{background:url(/cinema/common/imgs/zuoxia.png); opacity:0.6; filter:alpha(opacity=60);}
+/* IE6+7 hacks for the border. IE7 should support this natively but fails in conjuction with modal blackout bg. */
+/* NB:these must be absolute paths or URLs to your images */
+/*
+.boxy-wrapper .top-left{background-color:#96BB5C; opacity:0.6; filter:alpha(opacity=60); padding:0}
+.boxy-wrapper .top-right{background-color:#96BB5C; opacity:0.6; filter:alpha(opacity=60); padding:0}
+.boxy-wrapper .bottom-right{background-color:#96BB5C; opacity:0.6; filter:alpha(opacity=60); padding:0}
+.boxy-wrapper .bottom-left{background-color:#96BB5C; opacity:0.6; filter:alpha(opacity=60); padding:0}
+*/
+.boxy-wrapper .top,.boxy-wrapper .bottom{height:10px; background-color:#96BB5C; opacity:0.6; filter:alpha(opacity=60); padding:0}
+.boxy-wrapper .left,.boxy-wrapper .right{width:10px; background-color:#96BB5C; opacity:0.6; filter:alpha(opacity=60); padding:0}
+/*.boxy-wrapper .top-left{#background:none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://www.zhangxinxu.com/study/image/boxy/boxy-nw.png);}
+.boxy-wrapper .top-right{#background:none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://www.zhangxinxu.com/study/image/boxy/boxy-ne.png);}
+.boxy-wrapper .bottom-right{#background:none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://www.zhangxinxu.com/study/image/boxy/boxy-se.png);}
+.boxy-wrapper .bottom-left{#background:none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://www.zhangxinxu.com/study/image/boxy/boxy-sw.png);}
+.boxy-wrapper .top,.boxy-wrapper .bottom{height:10px; background-color:black; opacity:0.6; filter:alpha(opacity=60); padding:0}
+.boxy-wrapper .left,.boxy-wrapper .right{width:10px; background-color:black; opacity:0.6; filter:alpha(opacity=60); padding:0}
+*//* Title bar */
+.boxy-wrapper .title-bar{background-color:#f2f2f2;position: relative; }
+.boxy-wrapper .title-bar.dragging{cursor:move;}
+.boxy-wrapper .title-bar h2{font-size:16px; color:#000; line-height:1; margin:0; padding:0; font-weight:bold; font-family:"微软雅黑", "宋体"; text-align:left;}
+.boxy-wrapper .title-bar .close{color:#000; position:absolute; top:20px; right:20px; font-size:12px;}
+.boxy-wrapper .title-bar .close:hover{background-color:#CCC;}
+/* Content Region */
+.boxy-inner{background-color:white; padding:0}
+.boxy-content{padding:0px;text-align:center;}
+/* Question Boxes */
+.boxy-inner{padding:0;background-image:url(/cinema/common/imgs/divbg.jpg);}
+.boxy-wrapper .question{width:385px;height:88px;}
+.boxy-wrapper .answers{padding-bottom:20px;}
+.img_font{margin-top:27px;}
+.img_font img{float:none;vertical-align:middle;}
+.img_font font{margin-left:22px;font-weight:bold;color:#858585;line-height:4px;}
+.wait_img{float:none;padding-right:15px;vertical-align:middle;}
+/*confirm btn by zhangxinxu http://www.zhangxinxu.com*/
+.boxy-btn1,.boxy-btn2,.boxy-btn3{width:63px;height:26px;cursor:pointer;border:none;}
+
+
+
+.boxy-btn1,.boxy-btn2,.boxy-btn3{padding:3px 12px 1.9px; border-width:1px; border-style:solid; letter-spacing:1px; line-height:15px; cursor:pointer; overflow:visible;} 
+.boxy-btn1{background-color:#425f99; border-color:#5A7EC6 #2C3E5F #2C3E5F #5A7EC6; color:white;}
+.boxy-btn2{background-color:#ECE9D8; border-color:#eeeeee #bbbbbb #bbbbbb #eeeeee; color:#333333;}
+
+/*
+.boxy-btn1{background:url(/cinema/common/imgs/queding.png) no-repeat;}
+.boxy-btn2{background:url(/cinema/common/imgs/quxiao.png) no-repeat;margin-left:26px;}
+*/

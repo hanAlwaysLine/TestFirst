@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<select id="getCityPlaceList" resultClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo">
+		select * from
+		t0100_placeinfo t where cityNo='$jsonString$'
+	</select>
+	<!-- 排期查询 -->
+	<select id="select_feature" resultClass="cn.cinema.pojo.FeatureForm"
+		parameterClass="cn.cinema.pojo.FeatureForm">
+		select
+		featureappno,
+		to_char(adddatetime, 'yyyy-mm-dd') adddate,
+		featureno ,
+		featuredate ,
+		placename ,
+		placeno ,
+		filmno ,
+		filmname ,
+		appcode,
+		apppric,
+		hallno,
+		hallname,
+		featuretime,
+		androidpric,
+		winxinpric,
+		usesign,
+		setclose,
+		websitepric,
+		originalapprice,
+		status,
+		copytype,
+		updatetime
+		from t0201_feature_app
+		where 1=1
+		<isNotEmpty prepend="and" property="featuredate">
+			featuredate =
+			'$featuredate$'
+		   </isNotEmpty>
+		<isNotEmpty prepend="and" property="filmname">
+			filmname like
+			'%$filmname$%'
+		   </isNotEmpty>
+		<isEqual  prepend="and"  compareValue="0" property="useflag">
+			usesign = '0'
+		and
+			setclose = '1'
+		</isEqual>
+		<isEqual  prepend="and"  compareValue="1" property="useflag">
+			<![CDATA[(usesign <> '0' or setclose <> '1')]]>
+		</isEqual>
+		<isNotEmpty prepend="and" property="featureappno">
+			featureappno = #featureappno#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="starttime">
+			featuredate||' '||featuretime >= #starttime#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="endtime">
+			<![CDATA[featuredate||' '||featuretime <= #endtime#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="featureno">
+			featureno = #featureno#
+		</isNotEmpty>
+		
+		order by filmno,featuredate||featuretime desc
+	</select>
+	
+	<!-- 查询总数 -->
+	<select id="select_feature_count" parameterClass="cn.cinema.pojo.FeatureForm"
+		resultClass="java.lang.String">
+		select count(*)
+		from t0201_feature_app
+		where 1=1
+		<isNotEmpty prepend="and" property="featuredate">
+			featuredate = '$featuredate$'
+		   </isNotEmpty>
+		<isNotEmpty prepend="and" property="filmname">
+			filmname like
+			'%$filmname$%'
+		</isNotEmpty>
+		<isEqual  prepend="and"  compareValue="0" property="useflag">
+			usesign = '0'
+		and
+			setclose = '1'
+		</isEqual>
+		<isEqual  prepend="and"  compareValue="1" property="useflag">
+			<![CDATA[(usesign <> '0' or setclose <> '1')]]>
+		</isEqual>
+		
+		<isNotEmpty prepend="and" property="featureappno">
+			featureappno = #featureappno#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="starttime">
+			featuredate||' '||featuretime >= #starttime#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="endtime">
+			<![CDATA[featuredate||' '||featuretime <= #endtime#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="featureno">
+			featureno = #featureno#
+		</isNotEmpty>
+	</select>
+
+	<!-- 根据排期应用号判断排期是否存在 -->
+	<select id="feature_select_feaNumByNo" parameterClass="java.lang.String" resultClass="java.lang.Integer">
+		select count(*) from t0201_feature_app where featureappno = #featureappno#
+	</select>
+	
+	<!-- 根据影片编码查询影片名称 -->
+	<select id="select_filmname" parameterClass="java.lang.String"
+		resultClass="cn.cinema.pojo.FeatureForm">
+		select t.filmname from t0111_filmmessage t where t.filmno
+		= '$filmno$'
+	</select>
+	
+	<!-- 城市列表t0904_city -->
+	<select id="select_cityList" resultClass="cn.cinema.manage.entity.manage.T0904_City">
+		select id, parentid,
+		cityname, islock, addtime from t0904_city
+	</select>
+
+	<!-- 获取当前有效排期 -->
+	<select id="queryFeatureList" resultClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+		select * from
+		t0201_feature_app where (to_date(featuredate || ' '
+		||lpad(featuretime,4,'0') || ':00','yyyy-mm-dd
+		hh24mi:ss'))>sysdate+(#TickTime# / ( 24 )) and cinemalinkid is not
+		null
+	</select>
+	<!-- 根据影院编码 查询当天排期 -->
+	<select id="getFeatureByPlaceno" parameterClass="java.util.Map"
+		resultClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+		select * from t0201_feature_app t where t.placeno =
+		#placeno# and t.featuredate = #featuredate#
+	</select>
+	
+	<delete id="deleteFeature1">
+		delete t0201_feature_app where featureno =
+		#featureno#
+	</delete>
+	
+	<!-- 获取当前影院信息 -->
+	<select id="queryPlaceList" resultClass="cn.cinema.manage.entity.manage.T0100_PlaceInfo">
+		select
+		id,placeno,placename,cityno,usable,cinemalinkid from t0100_placeinfo
+		where usable=1 and cinemalinkid is null
+	</select>
+
+	<!-- 获取当前影片信息 -->
+	<select id="queryFilmList" resultClass="cn.cinema.manage.entity.manage.T0111_FILMMESSAGE">
+		select
+		id,filmno,filmname,filmename,genreno,showtime,stoptime,dvdtime,filmtime,direct,player,emit,offweb,parea,filmsis,getshow,directshow,playershow,remark,totalboxoffice,weakboxoffice,tags,grade,recommend,image,iscomments,comments,commentti,languang,addtime,source,recommend2,recommend3,release
+		from t0111_filmmessage where release in (1,2)
+	</select>
+
+	<insert id="insertFeature" parameterClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+		<selectKey resultClass="int" keyProperty="featureappno"
+			type="pre">
+			SELECT t0201_feature_app_swquence.NEXTVAL AS ID FROM DUAL
+		</selectKey>
+		insert into t0201_feature_app
+		(featureappno, featureno, placeno,
+		appcode, standpric, apppric, balancepric,
+		placename, hallno, hallname,
+		filmno, filmname, correlated,
+		featuredate, featuretime, setclose,
+		filmname1, sefeatureno,
+		adddatetime, featureappseatid, topcount,
+		usesign, copylanguage,
+		sectionid, showseqno, cinemalinkid,
+		androidpric,totalseats,remainingseats)
+		values
+		(#featureappno#,#featureno#,#placeno#,#appcode#,#standpric#,#apppric#,#balancepric#,#placename#,#hallno#,#hallname#,#filmno#,#filmname#,#correlated#,#featuredate#,#featuretime#,#setclose#,#filmname1#,#sefeatureno#,#adddatetime#,#featureappseatid#,#topcount#,#usesign#,#copylanguage#,#sectionid#,#showseqno#,#cinemalinkid#,#androidpric#,#totalseats#,#remainingseats#)
+	</insert>
+	
+	<update id="updateFeature" parameterClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+		update
+		t0201_feature_app
+		set featureno = #featureno#,
+		placeno = #placeno#,
+		standpric = #standpric#,
+		placename = #placename#,
+		filmno = #filmno#,
+		filmname = #filmname#,
+		featuredate = #featuredate#,
+		featuretime =
+		#featuretime#,
+		setclose = #setclose#,
+		adddatetime = #adddatetime#,
+		usesign = #usesign#,
+		sectionid = #sectionid#,
+		showseqno = #showseqno#,
+		cinemalinkid = #cinemalinkid#
+		where featureappno = #featureappno#
+	</update>
+	
+	<update id="deleteFeature" parameterClass="String">
+		update
+		t0201_feature_app
+		set usesign = '1'
+		where featureno = #featureno#
+	</update>
+	
+	<update id="updateFilmRelease">
+		update t0111_filmmessage
+		set release = '2'
+		where id =
+		#id# 
+	</update>
+	
+	<update id="updatefilm_hfh" parameterClass="cn.cinema.manage.entity.manage.T0111_FILMMESSAGE">
+		update
+		t0111_filmmessage
+		set filmno = #filmno#
+		where id = #id#
+	</update>
+	
+	<!-- 更新排期状态 -->
+	<update id="feature_update_setclose" parameterClass="cn.cinema.pojo.T0201_feature_app">
+		update t0201_feature_app
+		set setclose = #setclose#,
+		    usesign = #usesign#
+		where featureappno = #featureappno#
+	</update>
+	
+	<select id="selectsamefeatureno" parameterClass="java.lang.String"
+		resultClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+		select * from t0201_feature_app where
+		featureno=#featureno#
+	</select>
+	
+	<delete id="deletef" parameterClass="java.lang.Integer">
+		delete
+		from t0201_feature_app
+		where featureappno=#featureappno#
+	</delete>
+	
+	<!-- 根据排期编号判断排期是否存在 -->
+	<select id="isnothavefea" parameterClass="java.lang.String"
+		resultClass="java.lang.Integer">
+		select count(*) from t0201_feature_app t where
+		t.featureno=#featureno#
+	</select>
+	
+	<select id="select_filminfoforfea" parameterClass="java.lang.String"
+		resultClass="cn.cinema.manage.entity.manage.T0111_FILMMESSAGE">
+		select * from t0111_filmmessage where
+		substr(filmno,0,12)=substr(#filmno#,0,12)
+	</select>
+	
+	<update id="update_balancepric" parameterClass="map">
+		update
+		t0201_feature_app set
+		BALANCEPRIC=#balancepric#,updatetime=#updatetime# where
+		FEATUREAPPNO=#featureappno# 
+	</update>
+	
+	<update id="update_androidpric" parameterClass="map">
+		update
+		t0201_feature_app set
+		ANDROIDPRIC=#androidpric#,updatetime=#updatetime# where
+		FEATUREAPPNO=#featureappno# 
+	</update>
+	
+	<update id="update_winxinpric" parameterClass="map">
+		update
+		t0201_feature_app set winxinpric=#winxinpric#,updatetime=#updatetime#
+		where FEATUREAPPNO=#featureappno# 
+	</update>
+	
+	<update id="update_websitepric" parameterClass="map">
+		update
+		t0201_feature_app set
+		websitepric=#websitepric#,updatetime=#updatetime# where
+		FEATUREAPPNO=#featureappno# 
+	</update>
+	
+	<delete id="delete_featureapp" parameterClass="cn.cinema.pojo.T0201_feature_app">
+		delete from
+		t0201_feature_app where featureappno=#featureappno# and
+		placeno=#placeno#
+	</delete>
+	
+	<insert id="insert_featureapp" parameterClass="cn.cinema.pojo.T0201_feature_app">
+		insert into
+		t0201_feature_app
+		(featureappno, featuredate, featuretime, totaltime,
+		filmno, filmname, hallno,
+		placeno, apppric, standpric, setclose,
+		usesign, copytype,
+		copylanguage, remainingseats,
+		totalseats,flag,hallname,featureno,winxinpric,androidpric,adddatetime,websitepric,status,ORIGINALAPPRICE,UPDATETIME)
+		values
+		(#featureappno#, #featuredate#, #featuretime#, #totaltime#,
+		#filmno#, #filmname#,
+		#hallno#, #placeno#, #apppric#, #standpric#,
+		#setclose#, #usesign#,
+		#copytype#, #copylanguage#, #remainingseats#,
+		#totalseats#,#flag#,#hallname#,#featureno#,#winxinpric#,#androidpric#,sysdate,#websitepric#,#status#,#originalapprice#,to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'))
+	</insert>
+	
+	<update id="update_apppric" parameterClass="map">
+		update
+		t0201_feature_app set
+		apppric=#apppric#,updatetime=#updatetime# where
+		FEATUREAPPNO=#featureappno# 
+	</update>
+	
+	
+	<update id="update_apppricwxpric" parameterClass="map">
+		update
+		t0201_feature_app set
+		apppric=#apppric#,
+		winxinpric=#winxinpric#,
+		updatetime=#updatetime# where
+		FEATUREAPPNO=#featureappno# 
+	</update>
+	
+	
+	<update id="update_featurestatus" parameterClass="map">
+		update
+			t0201_feature_app set
+			status=#status#,updatetime=#updatetime#
+		where
+			FEATUREAPPNO=#featureappno# 
+	</update>
+	
+	<select id="selectfeaturenobyno" parameterClass="java.lang.String"
+		resultClass="cn.cinema.manage.entity.manage.T0201_FEATURE_APP">
+		select * from t0201_feature_app where
+		FEATUREAPPNO=#featureappno# 
+	</select>
+</sqlMap>

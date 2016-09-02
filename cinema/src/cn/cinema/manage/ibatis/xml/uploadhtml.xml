@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<!-- 上传页面信息查询 -->
+	<select id="uploadhtml_select_info"
+		parameterClass="cn.cinema.manage.entity.Activitymanage.T0404UploadHtml"
+		resultClass="cn.cinema.manage.entity.Activitymanage.T0404UploadHtml">
+		select * from t0404_uploadhtml u
+		where 1 = 1
+		<isNotEmpty prepend="and" property="htmlid">
+			u.htmlid=#htmlid#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="name">
+			u.name like '%'||#name#||'%'
+		</isNotEmpty>
+		order by u.htmlname
+	  </select>
+	  
+	<!-- 上传页面信息总数 -->
+	<select id="uploadhtml_select_count"
+		parameterClass="cn.cinema.manage.entity.Activitymanage.T0404UploadHtml"
+		resultClass="java.lang.String">
+		select count(u.htmlid)
+		from t0404_uploadhtml u
+		where 1 = 1
+		<isNotEmpty prepend="and" property="name">
+			u.name like '%'||#name#||'%'
+		</isNotEmpty>
+	</select>
+
+	<!-- 新增上传页面信息 -->
+	<insert id="uploadhtml_insert_info"
+		parameterClass="cn.cinema.manage.entity.Activitymanage.T0404UploadHtml">
+		insert into t0404_uploadhtml (htmlid, name, htmlname, htmlurl, htmltype, htmldatetime)
+		values
+		(t0404_uploadhtml_sequence.nextval, #name#, #htmlname#, #htmlurl#, #htmltype#, to_char(sysdate,'yyyy-mm-dd hh24:mi'))
+    </insert>
+
+	<!-- 删除上传页面信息 -->
+	<delete id="uploadhtml_delete_info"
+		parameterClass="cn.cinema.manage.entity.Activitymanage.T0404UploadHtml">
+		delete t0404_uploadhtml t where t.htmlid=#htmlid#
+	</delete>
+
+	<!-- 更新上传页面信息 -->
+	<update id="uploadhtml_update_info" parameterClass="cn.cinema.manage.entity.Activitymanage.T0404UploadHtml">
+		update t0404_uploadhtml
+		set name = #name#,
+		htmlname = #htmlname#,
+		htmlurl = #htmlurl#,
+		htmltype = #htmltype#,
+		htmldatetime = to_char(sysdate,'yyyy-mm-dd hh24:mi')
+		where htmlid = #htmlid#
+    </update>
+</sqlMap>

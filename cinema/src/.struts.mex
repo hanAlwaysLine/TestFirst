@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="cinemamanage-default" location="1180,7535" size="170,70" />
+  <package name="login" location="7495,6590" size="280,140">
+    <action name="login" location="65,47" size="150,62">
+      <result name="showuserpassword">
+        <resourceEdge source="showuserpassword" routing="0" target="changePassword.jsp" />
+      </result>
+      <result name="success" />
+    </action>
+  </package>
+  <package name="user" location="7845,7115" size="280,595">
+    <action name="user" location="65,379" size="150,167">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="userResult.jsp" />
+      </result>
+      <result name="goAdd">
+        <resourceEdge source="goAdd" routing="0" target="userAdd.jsp" />
+      </result>
+      <result name="add">
+        <resourceEdge source="add" routing="0" target="result.jsp" />
+      </result>
+      <result name="delete" />
+      <result name="goUpdate">
+        <resourceEdge source="goUpdate" routing="0" target="userUpdate.jsp" />
+      </result>
+      <result name="toDetailsUser">
+        <resourceEdge source="toDetailsUser" routing="0" target="detailsUser.jsp" />
+      </result>
+      <result name="update">
+        <resourceEdge source="update" routing="0" target="result.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="role" location="1125,8620" size="280,1120">
+    <action name="role" location="65,838" size="150,230">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="roleResult.jsp" />
+      </result>
+      <result name="goAdd">
+        <resourceEdge source="goAdd" routing="0" target="addRole.jsp" />
+      </result>
+      <result name="toDetailsRole">
+        <resourceEdge source="toDetailsRole" routing="0" target="detailsRole.jsp" />
+      </result>
+      <result name="add">
+        <resourceEdge source="add" routing="0" target="addRole.jsp" />
+      </result>
+      <result name="delete" />
+      <result name="goUpdate">
+        <resourceEdge source="goUpdate" routing="0" target="updateRole.jsp" />
+      </result>
+      <result name="update">
+        <resourceEdge source="update" routing="0" target="updateRole.jsp" />
+      </result>
+      <result name="goSq">
+        <resourceEdge source="goSq" routing="0" target="squan.jsp" />
+      </result>
+      <result name="sqAdd">
+        <resourceEdge source="sqAdd" routing="0" target="squan.jsp" />
+      </result>
+      <result name="gomain">
+        <resourceEdge source="gomain" routing="0" target="roleQuery.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="manage" location="425,7885" size="280,560">
+    <action name="cmanage" location="65,138" size="150,230">
+      <result name="queryCmanage">
+        <resourceEdge source="queryCmanage" routing="0" target="cmanageQuery.jsp" />
+      </result>
+      <result name="queryCmanageResult">
+        <resourceEdge source="queryCmanageResult" routing="0" target="cmanageResult.jsp" />
+      </result>
+      <result name="saveCmanage">
+        <resourceEdge source="saveCmanage" routing="0" target="cmanageAdd.jsp" />
+      </result>
+      <result name="delCmanage" />
+      <result name="updateUsable" />
+      <result name="isExist" />
+      <result name="goDetailedinformation">
+        <resourceEdge source="goDetailedinformation" routing="0" target="cmanageEdit.jsp" />
+      </result>
+      <result name="updateDetailedinformation">
+        <resourceEdge source="updateDetailedinformation" routing="0" target="cmanageEdit.jsp" />
+      </result>
+      <result name="updateDetailedinformation1">
+        <resourceEdge source="updateDetailedinformation1" routing="0" target="cmanageEdit1.jsp" />
+      </result>
+      <result name="goedit">
+        <resourceEdge source="goedit" routing="0" target="cmanageEdit1.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="filmmanage" location="6935,4385" size="665,2170">
+    <action name="filmmanage" location="450,43" size="150,419">
+      <result name="queryfilmmanage">
+        <resourceEdge source="queryfilmmanage" routing="0" target="filmmanageResult.jsp" />
+      </result>
+      <result name="delfilm" />
+      <result name="editfilm">
+        <resourceEdge source="editfilm" routing="0" target="filmmanageEdit.jsp" />
+      </result>
+      <result name="savefilm">
+        <resourceEdge source="savefilm" routing="0" target="filmmanageAdd.jsp" />
+      </result>
+      <result name="requery">
+        <resourceEdge source="requery" routing="0" target="filmmanageQuery.jsp" />
+      </result>
+      <result name="updatefilm">
+        <resourceEdge source="updatefilm" routing="0" target="filmmanageEdit.jsp" />
+      </result>
+      <result name="details">
+        <resourceEdge source="details" routing="0" target="filmmanageDetails.jsp" />
+      </result>
+      <result name="fimewarn">
+        <resourceEdge source="fimewarn" routing="0" target="fimewarnmanageResult.jsp" />
+      </result>
+      <result name="savefimewarn">
+        <resourceEdge source="savefimewarn" routing="0" target="fimewarnmanageAdd.jsp" />
+      </result>
+      <result name="goEditfimewarn">
+        <resourceEdge source="goEditfimewarn" routing="0" target="fimewarnmanageUpdate.jsp" />
+      </result>
+      <result name="editfimewarn">
+        <resourceEdge source="editfimewarn" routing="0" target="fimewarnmanageResult.jsp" />
+      </result>
+      <result name="delfimewarn" />
+      <result name="fimestill">
+        <resourceEdge source="fimestill" routing="0" target="filmmanageStillsResult.jsp" />
+      </result>
+      <result name="savefimestill">
+        <resourceEdge source="savefimestill" routing="0" target="filmmanageStillsAdd.jsp" />
+      </result>
+      <result name="goUpdatefimestills">
+        <resourceEdge source="goUpdatefimestills" routing="0" target="filmmanageStillsUpdate.jsp" />
+      </result>
+      <result name="updatefimestills">
+        <resourceEdge source="updatefimestills" routing="0" target="filmmanageStillsUpdate.jsp" />
+      </result>
+      <result name="delfimestills" />
+      <result name="rePosition">
+        <resourceEdge source="rePosition" routing="0" target="filmmanagePosition.jsp" />
+      </result>
+      <result name="gorelease" />
+    </action>
+    <action name="filmtypemanage" location="65,1485" size="150,125">
+      <result name="queryfilmtypemanage">
+        <resourceEdge source="queryfilmtypemanage" routing="0" target="filmtypemanageResult.jsp" />
+      </result>
+      <result name="savefilmtype">
+        <resourceEdge source="savefilmtype" routing="0" target="filmtypemanageAdd.jsp" />
+      </result>
+      <result name="delfilmtype" />
+      <result name="editfilmtype">
+        <resourceEdge source="editfilmtype" routing="0" target="filmtypemanageEdit.jsp" />
+      </result>
+      <result name="updatefilmtype">
+        <resourceEdge source="updatefilmtype" routing="0" target="filmtypemanageEdit.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="featuremanage" location="250,7465" size="280,210">
+    <action name="featuremanage" location="65,61" size="150,104">
+      <result name="query">
+        <resourceEdge source="query" routing="0" target="featuremanageQuery.jsp" />
+      </result>
+      <result name="queryfeature">
+        <resourceEdge source="queryfeature" routing="0" target="featuremanageResult.jsp" />
+      </result>
+      <result name="waiting">
+        <resourceEdge source="waiting" routing="0" target="waitingTip.jsp" />
+      </result>
+      <result name="update" />
+    </action>
+  </package>
+  <package name="orderformanage" location="4905,3965" size="560,210">
+    <action name="orderform" location="345,82" size="150,62">
+      <result name="queryOrderformResult">
+        <resourceEdge source="queryOrderformResult" routing="0" target="orderformResult.jsp" />
+      </result>
+      <result name="userOrderDetail">
+        <resourceEdge source="userOrderDetail" routing="0" target="orderformDetail.jsp" />
+      </result>
+    </action>
+    <action name="orderselect" location="65,71" size="150,83">
+      <result name="queryOrderformResult">
+        <resourceEdge source="queryOrderformResult" routing="0" target="orderformResult.jsp" />
+      </result>
+      <result name="userOrderDetail">
+        <resourceEdge source="userOrderDetail" routing="0" target="orderformDetail.jsp" />
+      </result>
+      <result name="json" />
+    </action>
+  </package>
+  <package name="activitymanage" location="810,850" size="595,280">
+    <action name="activity" location="380,43" size="150,209">
+      <result name="query">
+        <resourceEdge source="query" routing="0" target="activityQuery.jsp" />
+      </result>
+      <result name="addactivity">
+        <resourceEdge source="addactivity" routing="0" target="activityAdd.jsp" />
+      </result>
+      <result name="queryactivity">
+        <resourceEdge source="queryactivity" routing="0" target="activityResult.jsp" />
+      </result>
+      <result name="saveactivity">
+        <resourceEdge source="saveactivity" routing="0" target="activityAdd.jsp" />
+      </result>
+      <result name="delete" />
+      <result name="release" />
+      <result name="json" />
+      <result name="goedit">
+        <resourceEdge source="goedit" routing="0" target="activityEdit.jsp" />
+      </result>
+      <result name="update">
+        <resourceEdge source="update" routing="0" target="activityEdit.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="advertisemanage" location="3680,1655" size="2065,2100">
+    <action name="advertise" location="1850,183" size="150,419">
+      <result name="query">
+        <resourceEdge source="query" routing="0" target="advertiseQuery.jsp" />
+      </result>
+      <result name="querycarouse">
+        <resourceEdge source="querycarouse" routing="0" target="carouselchartResult.jsp" />
+      </result>
+      <result name="queryadchart">
+        <resourceEdge source="queryadchart" routing="0" target="adchartResult.jsp" />
+      </result>
+      <result name="queryactchart">
+        <resourceEdge source="queryactchart" routing="0" target="actchartResult.jsp" />
+      </result>
+      <result name="addcarouse">
+        <resourceEdge source="addcarouse" routing="0" target="carouselchartAdd.jsp" />
+      </result>
+      <result name="addadchart">
+        <resourceEdge source="addadchart" routing="0" target="adchartAdd.jsp" />
+      </result>
+      <result name="addactchart">
+        <resourceEdge source="addactchart" routing="0" target="actchartAdd.jsp" />
+      </result>
+      <result name="savecarouse">
+        <resourceEdge source="savecarouse" routing="0" target="carouselchartAdd.jsp" />
+      </result>
+      <result name="saveadchart">
+        <resourceEdge source="saveadchart" routing="0" target="adchartAdd.jsp" />
+      </result>
+      <result name="saveactchart">
+        <resourceEdge source="saveactchart" routing="0" target="actchartAdd.jsp" />
+      </result>
+      <result name="editcarouse">
+        <resourceEdge source="editcarouse" routing="0" target="carouselchartEdit.jsp" />
+      </result>
+      <result name="editadchart">
+        <resourceEdge source="editadchart" routing="0" target="adchartEdit.jsp" />
+      </result>
+      <result name="editactchart">
+        <resourceEdge source="editactchart" routing="0" target="actchartEdit.jsp" />
+      </result>
+      <result name="adposition">
+        <resourceEdge source="adposition" routing="0" target="adchartPosition.jsp" />
+      </result>
+      <result name="actposition">
+        <resourceEdge source="actposition" routing="0" target="actchartPosition.jsp" />
+      </result>
+      <result name="delete" />
+      <result name="editwarn">
+        <resourceEdge source="editwarn" routing="0" target="editwarn.jsp" />
+      </result>
+      <result name="editactwarn">
+        <resourceEdge source="editactwarn" routing="0" target="editactwarn.jsp" />
+      </result>
+      <result name="editactimg">
+        <resourceEdge source="editactimg" routing="0" target="editactimg.jsp" />
+      </result>
+    </action>
+    <action name="picture" location="380,330" size="150,125">
+      <result name="findPicList">
+        <resourceEdge source="findPicList" routing="0" target="pictureResult.jsp" />
+      </result>
+      <result name="addPic">
+        <resourceEdge source="addPic" routing="0" target="pictureAdd.jsp" />
+      </result>
+      <result name="findInfoById">
+        <resourceEdge source="findInfoById" routing="0" target="pictureEdit.jsp" />
+      </result>
+      <result name="editPic">
+        <resourceEdge source="editPic" routing="0" target="pictureEdit.jsp" />
+      </result>
+      <result name="json" />
+    </action>
+    <action name="uploadhtml" location="100,330" size="150,125">
+      <result name="findHtmlList">
+        <resourceEdge source="findHtmlList" routing="0" target="uploadHtmlResult.jsp" />
+      </result>
+      <result name="addHtml">
+        <resourceEdge source="addHtml" routing="0" target="uploadHtmlAdd.jsp" />
+      </result>
+      <result name="findInfoById">
+        <resourceEdge source="findInfoById" routing="0" target="uploadHtmlEdit.jsp" />
+      </result>
+      <result name="editHtml">
+        <resourceEdge source="editHtml" routing="0" target="uploadHtmlEdit.jsp" />
+      </result>
+      <result name="json" />
+    </action>
+  </package>
+  <package name="errormanage" location="7670,6765" size="280,140">
+    <action name="errormanage" location="65,57" size="150,41">
+      <result name="queryerrorlog">
+        <resourceEdge source="queryerrorlog" routing="0" target="errorlogResult.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="hallmanage" location="1755,780" size="280,770">
+    <action name="hall" location="65,509" size="150,188">
+      <result name="query">
+        <resourceEdge source="query" routing="0" target="hallQuery.jsp" />
+      </result>
+      <result name="addhall">
+        <resourceEdge source="addhall" routing="0" target="hallAdd.jsp" />
+      </result>
+      <result name="queryhall">
+        <resourceEdge source="queryhall" routing="0" target="hallResult.jsp" />
+      </result>
+      <result name="saveactivity">
+        <resourceEdge source="saveactivity" routing="0" target="activityAdd.jsp" />
+      </result>
+      <result name="delete" />
+      <result name="release" />
+      <result name="goedit">
+        <resourceEdge source="goedit" routing="0" target="hallEdit.jsp" />
+      </result>
+      <result name="update">
+        <resourceEdge source="update" routing="0" target="hallEdit.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="goodsmanage" location="2000,360" size="560,350">
+    <action name="goods" location="345,124" size="150,188">
+      <result name="query">
+        <resourceEdge source="query" routing="0" target="goodsQuery.jsp" />
+      </result>
+      <result name="addgoods">
+        <resourceEdge source="addgoods" routing="0" target="goodsAdd.jsp" />
+      </result>
+      <result name="queryhall">
+        <resourceEdge source="queryhall" routing="0" target="goodsResult.jsp" />
+      </result>
+      <result name="saveactivity">
+        <resourceEdge source="saveactivity" routing="0" target="activityAdd.jsp" />
+      </result>
+      <result name="delete" />
+      <result name="release" />
+      <result name="goedit">
+        <resourceEdge source="goedit" routing="0" target="goodsEdit.jsp" />
+      </result>
+      <result name="update">
+        <resourceEdge source="update" routing="0" target="goodsEdit.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="jobmanage" location="2840,10" size="315,1050">
+    <action name="job" location="100,824" size="150,188">
+      <result name="query">
+        <resourceEdge source="query" routing="0" target="jobQuery.jsp" />
+      </result>
+      <result name="addjob">
+        <resourceEdge source="addjob" routing="0" target="jobAdd.jsp" />
+      </result>
+      <result name="queryjob">
+        <resourceEdge source="queryjob" routing="0" target="jobResult.jsp" />
+      </result>
+      <result name="saveactivity">
+        <resourceEdge source="saveactivity" routing="0" target="activityAdd.jsp" />
+      </result>
+      <result name="delete" />
+      <result name="release" />
+      <result name="goedit">
+        <resourceEdge source="goedit" routing="0" target="jobEdit.jsp" />
+      </result>
+      <result name="update">
+        <resourceEdge source="update" routing="0" target="jobEdit.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="weixinmanage" location="3065,7430" size="180,70">
+    <action name="weixin" location="4,23" size="150,40" />
+  </package>
+  <package name="ifacemanage" location="2470,7430" size="180,70">
+    <action name="service" location="4,23" size="150,40" />
+  </package>
+  <package name="reportform" location="3155,1095" size="2940,245">
+    <action name="clientnum" location="65,162" size="150,41">
+      <result name="json" />
+    </action>
+    <action name="orderstatis" location="2480,162" size="150,41">
+      <result name="json" />
+    </action>
+    <action name="membernum" location="2480,57" size="150,41">
+      <result name="json" />
+    </action>
+    <action name="reconciliation" location="2725,57" size="150,41">
+      <result name="findOrderInfo">
+        <resourceEdge source="findOrderInfo" routing="0" target="reconciliationResult.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="changePassword.jsp" path="/changePassword.jsp" location="7841,6610" size="150,55" />
+  <webResource name="userResult.jsp" path="/user/userResult.jsp" location="7915,6960" size="150,55" />
+  <webResource name="userAdd.jsp" path="/user/userAdd.jsp" location="7921,7765" size="150,55" />
+  <webResource name="result.jsp" path="/user/result.jsp" location="8419,7100" size="150,55" />
+  <webResource name="userUpdate.jsp" path="/user/userUpdate.jsp" location="8191,7380" size="150,55" />
+  <webResource name="detailsUser.jsp" path="/user/detailsUser.jsp" location="8193,7205" size="150,55" />
+  <webResource name="roleResult.jsp" path="/role/roleResult.jsp" location="952,9200" size="150,55" />
+  <webResource name="addRole.jsp" path="/role/addRole.jsp" location="502,9515" size="150,55" />
+  <webResource name="detailsRole.jsp" path="/role/detailsRole.jsp" location="914,8710" size="150,55" />
+  <webResource name="updateRole.jsp" path="/role/updateRole.jsp" location="633,9340" size="150,55" />
+  <webResource name="squan.jsp" path="/role/squan.jsp" location="789,8920" size="150,55" />
+  <webResource name="roleQuery.jsp" path="/role/roleQuery.jsp" location="952,9025" size="150,55" />
+  <webResource name="cmanageQuery.jsp" path="/cmanage/cmanageQuery.jsp" location="747,8080" size="150,55" />
+  <webResource name="cmanageResult.jsp" path="/cmanage/cmanageResult.jsp" location="187,8080" size="150,55" />
+  <webResource name="cmanageAdd.jsp" path="/cmanage/cmanageAdd.jsp" location="473,8500" size="150,55" />
+  <webResource name="cmanageEdit.jsp" path="/cmanage/cmanageEdit.jsp" location="1034,7870" size="150,55" />
+  <webResource name="cmanageEdit1.jsp" path="/cmanage/cmanageEdit1.jsp" location="890,8255" size="150,55" />
+  <webResource name="filmmanageResult.jsp" path="/filmmanage/filmmanageResult.jsp" location="7662,4580" size="150,55" />
+  <webResource name="filmmanageEdit.jsp" path="/filmmanage/filmmanageEdit.jsp" location="5394,6470" size="150,55" />
+  <webResource name="filmmanageAdd.jsp" path="/filmmanage/filmmanageAdd.jsp" location="7178,4230" size="150,55" />
+  <webResource name="filmmanageQuery.jsp" path="/filmmanage/filmmanageQuery.jsp" location="6857,4230" size="150,55" />
+  <webResource name="filmmanageDetails.jsp" path="/filmmanage/filmmanageDetails.jsp" location="6645,4580" size="150,55" />
+  <webResource name="fimewarnmanageResult.jsp" path="/filmmanage/fimewarnmanageResult.jsp" location="5686,6365" size="150,55" />
+  <webResource name="fimewarnmanageAdd.jsp" path="/filmmanage/fimewarnmanageAdd.jsp" location="6637,4930" size="150,55" />
+  <webResource name="fimewarnmanageUpdate.jsp" path="/filmmanage/fimewarnmanageUpdate.jsp" location="6627,5105" size="150,55" />
+  <webResource name="filmmanageStillsResult.jsp" path="/filmmanage/filmmanageStillsResult.jsp" location="6634,5280" size="150,55" />
+  <webResource name="filmmanageStillsAdd.jsp" path="/filmmanage/filmmanageStillsAdd.jsp" location="6640,5455" size="150,55" />
+  <webResource name="filmmanageStillsUpdate.jsp" path="/filmmanage/filmmanageStillsUpdate.jsp" location="6000,6260" size="150,55" />
+  <webResource name="filmmanagePosition.jsp" path="/filmmanage/filmmanagePosition.jsp" location="6642,5665" size="150,55" />
+  <webResource name="filmtypemanageResult.jsp" path="/filmmanage/filmtypemanageResult.jsp" location="6635,5875" size="150,55" />
+  <webResource name="filmtypemanageAdd.jsp" path="/filmmanage/filmtypemanageAdd.jsp" location="6640,6050" size="150,55" />
+  <webResource name="filmtypemanageEdit.jsp" path="/filmmanage/filmtypemanageEdit.jsp" location="6326,6155" size="150,55" />
+  <webResource name="featuremanageQuery.jsp" path="/featuremanage/featuremanageQuery.jsp" location="257,7730" size="150,55" />
+  <webResource name="featuremanageResult.jsp" path="/featuremanage/featuremanageResult.jsp" location="257,7310" size="150,55" />
+  <webResource name="waitingTip.jsp" path="/featuremanage/waitingTip.jsp" location="9,7520" size="150,55" />
+  <webResource name="orderformResult.jsp" path="/orderform/orderformResult.jsp" location="5534,4020" size="150,55" />
+  <webResource name="orderformDetail.jsp" path="/orderform/orderformDetail.jsp" location="5220,3810" size="150,55" />
+  <webResource name="orderformResult.jsp" path="/orderselect/orderformResult.jsp" location="4937,3810" size="150,55" />
+  <webResource name="orderformDetail.jsp" path="/orderselect/orderformDetail.jsp" location="4623,4020" size="150,55" />
+  <webResource name="activityQuery.jsp" path="/activitymanage/activityQuery.jsp" location="528,940" size="150,55" />
+  <webResource name="activityAdd.jsp" path="/activitymanage/activityAdd.jsp" location="1163,520" size="150,55" />
+  <webResource name="activityResult.jsp" path="/activitymanage/activityResult.jsp" location="1473,940" size="150,55" />
+  <webResource name="activityEdit.jsp" path="/activitymanage/activityEdit.jsp" location="884,695" size="150,55" />
+  <webResource name="advertiseQuery.jsp" path="/advertisemanage/advertiseQuery.jsp" location="5484,3810" size="150,55" />
+  <webResource name="carouselchartResult.jsp" path="/advertisemanage/carouselchartResult.jsp" location="5786,3565" size="150,55" />
+  <webResource name="adchartResult.jsp" path="/advertisemanage/adchartResult.jsp" location="5803,3390" size="150,55" />
+  <webResource name="actchartResult.jsp" path="/advertisemanage/actchartResult.jsp" location="5802,3215" size="150,55" />
+  <webResource name="carouselchartAdd.jsp" path="/advertisemanage/carouselchartAdd.jsp" location="6107,3670" size="150,55" />
+  <webResource name="adchartAdd.jsp" path="/advertisemanage/adchartAdd.jsp" location="6159,1745" size="150,55" />
+  <webResource name="actchartAdd.jsp" path="/advertisemanage/actchartAdd.jsp" location="5983,1990" size="150,55" />
+  <webResource name="carouselchartEdit.jsp" path="/advertisemanage/carouselchartEdit.jsp" location="5793,2935" size="150,55" />
+  <webResource name="adchartEdit.jsp" path="/advertisemanage/adchartEdit.jsp" location="5810,2760" size="150,55" />
+  <webResource name="actchartEdit.jsp" path="/advertisemanage/actchartEdit.jsp" location="5809,2585" size="150,55" />
+  <webResource name="adchartPosition.jsp" path="/advertisemanage/adchartPosition.jsp" location="5798,2410" size="150,55" />
+  <webResource name="actchartPosition.jsp" path="/advertisemanage/actchartPosition.jsp" location="5797,2235" size="150,55" />
+  <webResource name="editwarn.jsp" path="/advertisemanage/editwarn.jsp" location="5783,1640" size="150,55" />
+  <webResource name="editactwarn.jsp" path="/advertisemanage/editactwarn.jsp" location="5494,1500" size="150,55" />
+  <webResource name="editactimg.jsp" path="/advertisemanage/editactimg.jsp" location="5182,1500" size="150,55" />
+  <webResource name="pictureResult.jsp" path="/picture/pictureResult.jsp" location="4050,3810" size="150,55" />
+  <webResource name="pictureAdd.jsp" path="/picture/pictureAdd.jsp" location="4301,3810" size="150,55" />
+  <webResource name="pictureEdit.jsp" path="/picture/pictureEdit.jsp" location="4057,1395" size="150,55" />
+  <webResource name="uploadHtmlResult.jsp" path="/uploadhtml/uploadHtmlResult.jsp" location="3393,1990" size="150,55" />
+  <webResource name="uploadHtmlAdd.jsp" path="/uploadhtml/uploadHtmlAdd.jsp" location="3749,3810" size="150,55" />
+  <webResource name="uploadHtmlEdit.jsp" path="/uploadhtml/uploadHtmlEdit.jsp" location="3750,1500" size="150,55" />
+  <webResource name="errorlogResult.jsp" path="/errorlog/errorlogResult.jsp" location="7996,6785" size="150,55" />
+  <webResource name="hallQuery.jsp" path="/hall/hallQuery.jsp" location="1585,1325" size="150,55" />
+  <webResource name="hallAdd.jsp" path="/hall/hallAdd.jsp" location="2081,1325" size="150,55" />
+  <webResource name="hallResult.jsp" path="/hall/hallResult.jsp" location="1830,625" size="150,55" />
+  <webResource name="hallEdit.jsp" path="/hall/hallEdit.jsp" location="1417,1185" size="150,55" />
+  <webResource name="goodsQuery.jsp" path="/goods/goodsQuery.jsp" location="2092,205" size="150,55" />
+  <webResource name="goodsAdd.jsp" path="/goods/goodsAdd.jsp" location="2623,520" size="150,55" />
+  <webResource name="goodsResult.jsp" path="/goods/goodsResult.jsp" location="2617,345" size="150,55" />
+  <webResource name="goodsEdit.jsp" path="/goods/goodsEdit.jsp" location="2344,100" size="150,55" />
+  <webResource name="jobQuery.jsp" path="/job/jobQuery.jsp" location="2671,695" size="150,55" />
+  <webResource name="jobAdd.jsp" path="/job/jobAdd.jsp" location="2677,870" size="150,55" />
+  <webResource name="jobResult.jsp" path="/job/jobResult.jsp" location="2811,1115" size="150,55" />
+  <webResource name="jobEdit.jsp" path="/job/jobEdit.jsp" location="3203,870" size="150,55" />
+  <webResource name="reconciliationResult.jsp" path="/reportform/reconciliation/reconciliationResult.jsp" location="5798,1395" size="150,55" />
+</Struts2Diagram>
+
